@@ -9,8 +9,8 @@ const variants = {
 
 export function HeroText() {
   return (
-    <div className="z-10 mt-20 rounded-3xl bg-clip-text text-center md:mt-40 md:text-left">
-      <div className="c-space hidden flex-col md:flex">
+    <div className="z-10 bg-clip-text text-center md:text-left mt-[20vh] md:pl-[7vw]">
+      <div className="hidden flex-col md:flex gap-6">
         <motion.h1 className="text-4xl font-medium" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1 }}>
           Hi I&apos;m Ali
         </motion.h1>
@@ -21,7 +21,7 @@ export function HeroText() {
           <motion.div variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.5 }}>
             <FlipWords words={words} className="text-8xl font-black text-white" />
           </motion.div>
-          <motion.p className="text-4xl font-medium text-neutral-300" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.8 }}>
+          <motion.p className="text-4xl font-medium text-neutral-300 mt-2" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.8 }}>
             Web Solutions
           </motion.p>
         </div>
@@ -43,6 +43,8 @@ export function HeroText() {
           </motion.p>
         </div>
       </div>
+
     </div>
+
   )
 }

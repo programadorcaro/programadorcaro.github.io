@@ -5,11 +5,11 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="fixed inset-x-0 z-20 w-full bg-primary/40 backdrop-blur-lg">
-      <div className="c-space mx-auto max-w-7xl">
-        <div className="flex items-center justify-between py-2 sm:py-0">
+    <header className="w-full px-3 py-4 bg-primary/40 backdrop-blur-lg fixed z-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-neutral-400 transition-colors hover:text-white">
-            Ali
+            Lucas (programadorcaro)
           </a>
 
           <button
