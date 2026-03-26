@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #030412;
+}
+
+body {
+  background: #030412;
+  color: white;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.c-space {
+  @apply px-5 sm:px-10 lg:px-15;
+}
+
+.nav-ul {
+  @apply relative z-20 flex flex-col items-center gap-4 sm:flex-row md:gap-6;
+}
+
+.nav-li {
+  @apply py-2 text-neutral-400 hover:text-white max-sm:w-full max-sm:rounded-md max-sm:px-5;
+}
+
+.nav-link {
+  @apply text-lg transition-colors hover:text-white md:text-base;
+}
