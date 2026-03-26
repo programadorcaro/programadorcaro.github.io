@@ -9,7 +9,7 @@ const variants = {
 
 export function HeroText() {
   return (
-    <div className="z-10 bg-clip-text text-center md:text-left mt-[20vh] md:pl-[7vw]">
+    <div className="z-10 bg-clip-text text-center md:text-left max-w-7xl mx-auto w-full mt-[20vh]">
       <div className="hidden flex-col md:flex gap-6">
         <motion.h1 className="text-4xl font-medium" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1 }}>
           Hi I&apos;m Ali

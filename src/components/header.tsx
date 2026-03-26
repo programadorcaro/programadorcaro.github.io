@@ -36,7 +36,7 @@ export function Header() {
           style={{ maxHeight: '100vh' }}
           transition={{ duration: 1 }}
         >
-          <nav className="pb-5">
+          <nav className="py-6">
             <Navigation />
           </nav>
         </motion.div>
