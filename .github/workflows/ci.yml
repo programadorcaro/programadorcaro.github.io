@@ -34,3 +34,6 @@ jobs:
 
       - name: Build app
         run: pnpm run build
+        env:
+          VITE_SWETRIX_PROJECT_ID: ${{ secrets.VITE_SWETRIX_PROJECT_ID || 'uOuKcv8DuTXa' }}
+          VITE_SWETRIX_API_URL: ${{ secrets.VITE_SWETRIX_API_URL || 'https://analytics.usekit.dev/backend/v1/log' }}

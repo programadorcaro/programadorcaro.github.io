@@ -5,10 +5,10 @@ import App from './App.tsx'
 
 import * as Swetrix from 'swetrix'
 
-const projectId = import.meta.env.VITE_SWETRIX_PROJECT_ID
-const apiURL = import.meta.env.VITE_SWETRIX_API_URL
+const projectId = import.meta.env.VITE_SWETRIX_PROJECT_ID || 'uOuKcv8DuTXa'
+const apiURL = import.meta.env.VITE_SWETRIX_API_URL || 'https://analytics.usekit.dev/backend/v1/log'
 
-if (projectId) {
+if (import.meta.env.PROD) {
   Swetrix.init(projectId, {
     apiURL: apiURL,
   })
