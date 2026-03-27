@@ -6,7 +6,7 @@ export const Section = forwardRef<ElementRef<'section'>, ComponentPropsWithoutRe
   { className, ...props },
   ref,
 ) {
-  return <section ref={ref} className={cn('mt-20 md:mt-30', className)} {...props} />
+  return <section ref={ref} className={cn('mt-20 md:mt-30 px-6', className)} {...props} />
 })
 
 Section.displayName = 'Section'

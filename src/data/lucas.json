@@ -1,0 +1,222 @@
+{
+  "personal_info": {
+    "name": "Lucas Maia e Silva",
+    "title": "Product Engineer / System Thinker / Senior Software Engineer",
+    "location": "Belo Horizonte, Minas Gerais, Brazil",
+    "work_mode": "Remote",
+    "contacts": {
+      "phone": "+5531993190165",
+      "email": "lucasmaiaesilva@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/lucasmaiaesilva",
+      "github_main": "https://github.com/lucasmaiaesilva",
+      "github_secondary": "https://github.com/programadorcaro"
+    }
+  },
+  "summary": "Senior Software Engineer with strong background in front-end and full-stack development. Specialized in React, Next.js, TypeScript, and Node.js. Experience building real-time, data-driven platforms such as trading dashboards for energy optimization. Strong focus on performance, scalability, and product-driven development. Postgraduate in Finance (Ibmec).",
+  "skills": {
+    "core": ["React", "Next.js", "TypeScript", "Node.js", "JavaScript"],
+    "frontend": [
+      "React",
+      "Next.js",
+      "React Native",
+      "Redux",
+      "Styled Components",
+      "Tailwind CSS",
+      "Radix UI"
+    ],
+    "backend": ["Node.js", "GraphQL", "REST APIs"],
+    "testing": ["Jest", "Playwright"],
+    "data_visualization": ["Plotly.js"],
+    "architecture": [
+      "Block-based architecture",
+      "Design Systems",
+      "SSG/SSR caching strategies"
+    ],
+    "tools": ["Git", "Figma", "Storybook", "Snowflake"]
+  },
+  "experience": [
+    {
+      "company": "BairesDev",
+      "role": "Senior Software Engineer",
+      "period": {
+        "start": "2022-04",
+        "end": "2025-10",
+        "duration": "3 years 7 months"
+      },
+      "type": "Remote",
+      "team_size": 7,
+      "project": "Real-time trading dashboard for battery energy storage optimization",
+      "responsibilities": [
+        "Developed real-time trading platform",
+        "Built advanced data visualization tools",
+        "Implemented bid/offer systems",
+        "Integrated real-time market data"
+      ],
+      "achievements": [
+        "Built multi-axis chart system with Plotly supporting 3+ Y axes",
+        "Reduced backend requests by 90% using caching strategies",
+        "Created scalable bid/offer system with validation",
+        "Developed 20+ reusable components with Storybook",
+        "Reduced code duplication by 60% via shared design system"
+      ],
+      "tech_stack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Node.js",
+        "Snowflake",
+        "Plotly.js",
+        "Radix UI",
+        "Storybook",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "company": "Gronda",
+      "role": "Senior Frontend Engineer",
+      "period": {
+        "start": "2021-09",
+        "end": "2022-03",
+        "duration": "7 months"
+      },
+      "team": {
+        "frontend": 2,
+        "backend": 4,
+        "design": 2
+      },
+      "responsibilities": [
+        "Led UI/UX implementation",
+        "Worked on React Native app and Next.js web",
+        "Collaborated with design team"
+      ],
+      "achievements": [
+        "Increased recipe views by 60%",
+        "Led migration from class components to React Hooks",
+        "Improved reliability of user data and roles"
+      ],
+      "tech_stack": [
+        "React Native",
+        "Next.js",
+        "TypeScript",
+        "Redux",
+        "Styled Components",
+        "REST APIs",
+        "Mixpanel",
+        "Jest"
+      ]
+    },
+    {
+      "company": "INOVATA - FDTE",
+      "role": "Senior Frontend Engineer",
+      "period": {
+        "start": "2020-10",
+        "end": "2021-09",
+        "duration": "1 year"
+      },
+      "project": "Carat global commerce platform (Fiserv)",
+      "responsibilities": [
+        "Developed payment dashboards",
+        "Worked on design systems",
+        "Ensured compliance with security standards"
+      ],
+      "achievements": [
+        "Helped build banking-grade UI",
+        "Aligned component APIs with external design system",
+        "Delivered secure and compliant frontend"
+      ],
+      "tech_stack": [
+        "React",
+        "Redux",
+        "TypeScript",
+        "styled-components",
+        "Node.js"
+      ]
+    },
+    {
+      "company": "Impulso",
+      "role": "Senior Frontend Developer",
+      "period": {
+        "start": "2018-05",
+        "end": "2020-04",
+        "duration": "2 years"
+      },
+      "projects": ["Veloe", "Descomplica", "ME (B2B logistics)"],
+      "achievements": [
+        "Reduced API requests by 30%+ using GraphQL",
+        "Fixed critical production issues",
+        "Built B2B dashboards with role-based access"
+      ],
+      "tech_stack": [
+        "React",
+        "Vue.js",
+        "GraphQL",
+        "Node.js",
+        "Redux",
+        "Vuex",
+        "Jest"
+      ]
+    },
+    {
+      "company": "VML",
+      "role": "Frontend Developer",
+      "period": {
+        "start": "2017-06",
+        "end": "2018-05",
+        "duration": "1 year"
+      },
+      "location": "São Paulo, Brazil",
+      "client": "Oi",
+      "achievements": [
+        "Built UI for system with 13M daily users",
+        "Led isomorphic architecture implementation",
+        "Improved performance at scale"
+      ],
+      "tech_stack": ["JavaScript", "Node.js", "Stylus", "Isomorphic apps"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Faculdade Pitágoras",
+      "degree": "Bachelor in Computer Science",
+      "period": "2009 - 2014"
+    },
+    {
+      "institution": "Ibmec",
+      "degree": "Postgraduate in Finance",
+      "period": "2019 - 2020"
+    }
+  ],
+  "certifications": [
+    "React",
+    "JavaScript (Intermediate)",
+    "React Frontend Developer"
+  ],
+  "languages": [
+    {
+      "language": "Portuguese",
+      "level": "Native"
+    },
+    {
+      "language": "English",
+      "level": "Full Professional"
+    },
+    {
+      "language": "Spanish",
+      "level": "Elementary"
+    }
+  ],
+  "notable_strengths": [
+    "Real-time systems",
+    "Data visualization platforms",
+    "Frontend architecture",
+    "Design systems and component libraries",
+    "Performance optimization",
+    "Product-driven engineering"
+  ],
+  "career_highlights": [
+    "Built trading platform used as primary tool by energy traders",
+    "Reduced backend load by 90%",
+    "Improved engagement metrics by 60%",
+    "Worked on systems with 13M daily users"
+  ]
+}

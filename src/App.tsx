@@ -5,6 +5,7 @@ import { Section } from './components/section'
 import { site } from './data/site'
 import { AboutSection } from './sections/about'
 import { ContactSection } from './sections/contact'
+import { EducationAchievementsSection } from './sections/education-achievements'
 import { ExperiencesSection } from './sections/experiences'
 import { FooterSection } from './sections/footer'
 import { ProjectsSection } from './sections/projects'
@@ -28,6 +29,7 @@ function App() {
         <AboutSection />
         <ProjectsSection />
         <ExperiencesSection />
+        <EducationAchievementsSection />
         <TestimonialSection />
         <ContactSection />
         <FooterSection />
