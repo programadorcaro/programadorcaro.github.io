@@ -37,3 +37,6 @@ jobs:
         env:
           VITE_SWETRIX_PROJECT_ID: ${{ secrets.VITE_SWETRIX_PROJECT_ID || 'uOuKcv8DuTXa' }}
           VITE_SWETRIX_API_URL: ${{ secrets.VITE_SWETRIX_API_URL || 'https://analytics.usekit.dev/backend/v1/log' }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID || 'service_wqaqblr' }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID || 'template_jiyk3x1' }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY || 'JUgKs-Z9Rviu3nrPw' }}
