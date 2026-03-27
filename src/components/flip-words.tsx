@@ -6,9 +6,11 @@ type FlipWordsProps = {
   words: string[]
   duration?: number
   className?: string
+  /** When true, the flipping word is horizontally centered (e.g. mobile hero). */
+  center?: boolean
 }
 
-export function FlipWords({ words, duration = 3000, className }: FlipWordsProps) {
+export function FlipWords({ words, duration = 3000, className, center = false }: FlipWordsProps) {
   const [currentWord, setCurrentWord] = useState(words[0] ?? '')
   const [isAnimating, setIsAnimating] = useState(false)
   const fallbackWord = getLongestWord(words)
@@ -30,7 +32,13 @@ export function FlipWords({ words, duration = 3000, className }: FlipWordsProps)
   }, [isAnimating, duration, startAnimation])
 
   return (
-    <span className={twMerge('relative inline-flex min-h-[1.1em] items-start text-left', className)}>
+    <span
+      className={twMerge(
+        'relative min-h-[1.1em] items-start',
+        center ? 'flex w-full justify-center text-center' : 'inline-flex text-left',
+        className,
+      )}
+    >
       <span className="invisible whitespace-pre" aria-hidden="true">
         {fallbackWord}
       </span>
@@ -39,8 +47,11 @@ export function FlipWords({ words, duration = 3000, className }: FlipWordsProps)
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 100, damping: 10 }}
-          exit={{ opacity: 0, y: -40, x: 40, filter: 'blur(8px)', scale: 1.05 }}
-          className="absolute left-0 top-0 z-10 inline-block"
+          exit={{ opacity: 0, y: -40, x: center ? 0 : 40, filter: 'blur(8px)', scale: 1.05 }}
+          className={twMerge(
+            'absolute top-0 z-10',
+            center ? 'left-0 right-0 flex flex-wrap justify-center' : 'left-0 inline-block',
+          )}
           key={currentWord}
         >
           {currentWord.split(' ').map((word, wordIndex) => (

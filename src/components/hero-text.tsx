@@ -36,22 +36,22 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
         <HeroCtas ctas={ctas} className="mt-4 w-full max-w-2xl flex flex-col gap-3 sm:flex-row sm:gap-4" transitionDelay={2.1} />
       </div>
 
-      <div className="flex flex-col space-y-6 md:hidden">
+      <div className="flex flex-col items-center gap-6 text-center md:hidden">
         <motion.p className="text-4xl font-medium" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1 }}>
           {mobile.greeting}
         </motion.p>
-        <div>
+        <div className="flex w-full max-w-full flex-col items-center text-center">
           <motion.p className="text-5xl font-black text-neutral-300" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.2 }}>
             {mobile.lineBeforeFlip}
           </motion.p>
-          <motion.div variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.5 }}>
-            <FlipWords words={words} className="text-5xl font-bold text-white my-4" />
+          <motion.div className="w-full" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.5 }}>
+            <FlipWords center words={words} className="text-5xl font-bold text-white my-4" />
           </motion.div>
           <motion.p className="text-4xl font-black text-neutral-300" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.8 }}>
             {mobile.lineAfterFlip}
           </motion.p>
         </div>
-        <HeroCtas ctas={ctas} className="mt-2 flex w-full flex-col gap-3 sm:flex-row sm:gap-4" transitionDelay={2.1} />
+        <HeroCtas ctas={ctas} className="mt-2 flex w-full max-w-2xl flex-col gap-3 sm:flex-row sm:gap-4" transitionDelay={2.1} />
       </div>
     </div>
   )
@@ -87,7 +87,7 @@ function HeroCtas({
         href={ctas.linkedIn.href}
         target="_blank"
         rel="noreferrer"
-        className="flex flex-1 items-center justify-center rounded-xl border border-white/15 bg-linear-to-b from-royal to-lavender px-6 py-4 text-center text-base font-semibold text-white shadow-md shadow-royal/25 transition-[opacity,filter] hover:bg-white hover:outline-1 brightness-[1.03]"
+        className="flex flex-1 items-center justify-center rounded-xl border border-white/15 bg-linear-to-b from-royal to-lavender px-6 py-4 text-center text-base font-semibold text-white shadow-md shadow-royal/25 transition-[opacity,filter] hover:bg-white hover:outline-1 brightness-[1.03] md:max-w-[70%]"
       >
         {ctas.linkedIn.label}
       </a>

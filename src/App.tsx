@@ -19,7 +19,7 @@ function App() {
 
       <Section
         id="home"
-        className="relative isolate flex h-[70dvh] w-full items-start justify-center overflow-hidden md:justify-start mt-0 md:mt-0"
+        className="relative isolate flex h-dvh md:h-[70dvh] w-full items-start justify-center overflow-hidden md:justify-start mt-0 md:mt-0"
       >
         <ModelPlayground />
         <HeroText hero={site.hero} ctas={site.footer.ctas} />
