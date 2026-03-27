@@ -16,7 +16,7 @@ export function HeroText({ hero }: HeroTextProps) {
   const { desktop, mobile } = hero
 
   return (
-    <div className="z-10 mx-auto mt-[20vh] w-full max-w-7xl bg-clip-text text-center md:text-left">
+    <div className="z-10 mx-auto mt-[12vh] md:mt-[20vh] w-full max-w-7xl bg-clip-text text-center md:text-left">
       <div className="hidden flex-col gap-6 md:flex">
         <motion.h1 className="text-4xl font-medium" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1 }}>
           {desktop.greeting}
