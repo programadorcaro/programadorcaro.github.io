@@ -1,5 +1,6 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import type { YoutubeVideoItem } from '../data/site'
+import { site } from '../data/site'
 
 const GAP_PX = 16
 
@@ -20,11 +21,7 @@ export function YoutubeCarousel({ videos }: YoutubeCarouselProps) {
   )
 
   if (validVideos.length === 0) {
-    return (
-      <p className="text-sm text-neutral-400">
-        Add valid YouTube video IDs in <code>src/data/site.ts</code> to render the carousel.
-      </p>
-    )
+    return <p className="text-sm text-neutral-400">{site.youtubeCarousel.emptyState}</p>
   }
 
   return (

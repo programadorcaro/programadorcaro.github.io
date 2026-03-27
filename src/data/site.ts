@@ -1,4 +1,5 @@
 import lucasRaw from './lucas.json'
+import siteJson from './site.json'
 
 export type NavItem = {
   label: string
@@ -140,6 +141,8 @@ export type SiteContent = {
   companyProjects: {
     sectionTitle: string
     sectionDescription: string
+    viewProjectLabel: string
+    linkPendingLabel: string
     items: CompanyProjectItem[]
   }
   educationAchievements: {
@@ -176,6 +179,8 @@ export type SiteContent = {
     youtubeChannelUrl: string
     youtubeVideos: YoutubeVideoItem[]
     copyright: string
+    latestVideosTitle: string
+    visitChannelLabel: string
   }
   socials: SocialLink[]
   copyEmail: {
@@ -184,6 +189,13 @@ export type SiteContent = {
     copiedLabel: string
     copyIcon: string
     copyDoneIcon: string
+  }
+  cssDrawings: {
+    sectionTitle: string
+    iframeTitle: string
+  }
+  youtubeCarousel: {
+    emptyState: string
   }
 }
 
@@ -463,14 +475,8 @@ const orbitSkills = Array.from(
 
 export const site: SiteContent = {
   header: {
-    brandName: 'Lucas Maia',
-    nav: [
-      { label: 'Home', href: '#home' },
-      { label: 'About', href: '#about' },
-      { label: 'Work', href: '#work' },
-      { label: 'Education', href: '#education' },
-      { label: 'Contact', href: '#contact' },
-    ],
+    brandName: siteJson.header.brandName,
+    nav: siteJson.header.nav,
   },
   hero: {
     flipWords: ['Scalable', 'Secure', 'Product-Driven'],
@@ -564,6 +570,8 @@ export const site: SiteContent = {
   companyProjects: {
     sectionTitle: 'Projects',
     sectionDescription: 'Projects linked to each company role. This section is ready for LinkedIn public export enrichment.',
+    viewProjectLabel: siteJson.companyProjectsLabels.viewProjectLabel,
+    linkPendingLabel: siteJson.companyProjectsLabels.linkPendingLabel,
     items: lucas.experience.flatMap(normalizeExperienceProjects),
   },
   educationAchievements: {
@@ -670,6 +678,15 @@ export const site: SiteContent = {
       { id: 'vB8JPyotv5U', title: 'Programador Caro - Video 2' },
     ],
     copyright: `© ${new Date().getFullYear()} ${lucas.personal_info.name}. All rights reserved.`,
+    latestVideosTitle: siteJson.footerLabels.latestVideosTitle,
+    visitChannelLabel: siteJson.footerLabels.visitChannelLabel,
+  },
+  cssDrawings: {
+    sectionTitle: siteJson.cssDrawings.sectionTitle,
+    iframeTitle: siteJson.cssDrawings.iframeTitle,
+  },
+  youtubeCarousel: {
+    emptyState: siteJson.youtubeCarousel.emptyState,
   },
   socials: [
     {

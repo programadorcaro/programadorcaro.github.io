@@ -1,5 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import { Marquee } from '../components/marquee'
+import { Section } from '../components/section'
 import { site } from '../data/site'
 import type { TestimonialItem } from '../data/site'
 
@@ -28,7 +29,7 @@ export function TestimonialSection() {
   const secondRow = items.slice(items.length / 2)
 
   return (
-    <div className="mt-25 items-start md:mt-35">
+    <Section id="testimonials" className="items-start">
       <h2 className="text-heading">{site.testimonials.sectionTitle}</h2>
       <div className="relative mt-12 flex w-full flex-col items-center justify-center overflow-hidden">
         <Marquee pauseOnHover className="[--duration:20s]">
@@ -44,6 +45,6 @@ export function TestimonialSection() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-primary"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-primary"></div>
       </div>
-    </div>
+    </Section>
   )
 }

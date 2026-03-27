@@ -31,10 +31,10 @@ export function CompanyProjectsSection() {
               </div>
               {project.href ? (
                 <a href={project.href} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-sand hover:underline">
-                  View Project
+                  {companyProjects.viewProjectLabel}
                 </a>
               ) : (
-                <span className="inline-flex text-sm text-neutral-500">Link pending (add via LinkedIn export)</span>
+                <span className="inline-flex text-sm text-neutral-500">{companyProjects.linkPendingLabel}</span>
               )}
             </div>
           </article>

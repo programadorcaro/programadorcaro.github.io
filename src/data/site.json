@@ -1,12 +1,30 @@
 {
   "header": {
-    "brandName": "Lucas (programadorcaro)",
+    "brandName": "Lucas Maia",
     "nav": [
       { "label": "Home", "href": "#home" },
       { "label": "About", "href": "#about" },
       { "label": "Work", "href": "#work" },
+      { "label": "Experience", "href": "#experience" },
+      { "label": "Projects", "href": "#projects" },
+      { "label": "Education", "href": "#education" },
       { "label": "Contact", "href": "#contact" }
     ]
+  },
+  "cssDrawings": {
+    "sectionTitle": "I make drawings with CSS",
+    "iframeTitle": "Game Boy — CSS playground"
+  },
+  "footerLabels": {
+    "latestVideosTitle": "Latest Videos",
+    "visitChannelLabel": "Visit channel"
+  },
+  "companyProjectsLabels": {
+    "viewProjectLabel": "View Project",
+    "linkPendingLabel": "Link pending (add via LinkedIn export)"
+  },
+  "youtubeCarousel": {
+    "emptyState": "Add valid YouTube video IDs to footer.youtubeVideos in site data to render the carousel."
   },
   "hero": {
     "flipWords": ["Secure", "Modern", "Scalable"],
@@ -32,11 +50,31 @@
     },
     "codeCraftLabel": "CODE IS CRAFT",
     "floatingCards": [
-      { "kind": "text", "text": "GRASP", "style": { "rotate": "75deg", "top": "30%", "left": "20%" } },
-      { "kind": "text", "text": "SOLID", "style": { "rotate": "-30deg", "top": "60%", "left": "45%" } },
-      { "kind": "text", "text": "Design Patterns", "style": { "rotate": "90deg", "bottom": "30%", "left": "70%" } },
-      { "kind": "text", "text": "Design Principles", "style": { "rotate": "-45deg", "top": "55%", "left": "0%" } },
-      { "kind": "text", "text": "SRP", "style": { "rotate": "20deg", "top": "10%", "left": "38%" } },
+      {
+        "kind": "text",
+        "text": "GRASP",
+        "style": { "rotate": "75deg", "top": "30%", "left": "20%" }
+      },
+      {
+        "kind": "text",
+        "text": "SOLID",
+        "style": { "rotate": "-30deg", "top": "60%", "left": "45%" }
+      },
+      {
+        "kind": "text",
+        "text": "Design Patterns",
+        "style": { "rotate": "90deg", "bottom": "30%", "left": "70%" }
+      },
+      {
+        "kind": "text",
+        "text": "Design Principles",
+        "style": { "rotate": "-45deg", "top": "55%", "left": "0%" }
+      },
+      {
+        "kind": "text",
+        "text": "SRP",
+        "style": { "rotate": "20deg", "top": "10%", "left": "38%" }
+      },
       {
         "kind": "image",
         "image": "assets/logos/csharp.svg",
@@ -122,7 +160,11 @@
           { "id": 1, "name": "C#", "path": "/assets/logos/csharp.svg" },
           { "id": 2, "name": ".Net", "path": "/assets/logos/dotnet.svg" },
           { "id": 3, "name": "Ef Core", "path": "/assets/logos/dotnet.svg" },
-          { "id": 4, "name": "TailwindCSS", "path": "/assets/logos/tailwindcss.svg" }
+          {
+            "id": 4,
+            "name": "TailwindCSS",
+            "path": "/assets/logos/tailwindcss.svg"
+          }
         ]
       },
       {
@@ -142,7 +184,11 @@
           { "id": 1, "name": "Auth0", "path": "/assets/logos/auth0.svg" },
           { "id": 2, "name": "React", "path": "/assets/logos/react.svg" },
           { "id": 3, "name": "SQLite", "path": "/assets/logos/sqlite.svg" },
-          { "id": 4, "name": "TailwindCSS", "path": "/assets/logos/tailwindcss.svg" }
+          {
+            "id": 4,
+            "name": "TailwindCSS",
+            "path": "/assets/logos/tailwindcss.svg"
+          }
         ]
       },
       {
@@ -160,9 +206,17 @@
         "image": "/assets/projects/blazor-app.jpg",
         "tags": [
           { "id": 1, "name": "Blazor", "path": "/assets/logos/blazor.svg" },
-          { "id": 2, "name": ".NET Core", "path": "/assets/logos/dotnetcore.svg" },
+          {
+            "id": 2,
+            "name": ".NET Core",
+            "path": "/assets/logos/dotnetcore.svg"
+          },
           { "id": 3, "name": "SQLite", "path": "/assets/logos/sqlite.svg" },
-          { "id": 4, "name": "TailwindCSS", "path": "/assets/logos/tailwindcss.svg" }
+          {
+            "id": 4,
+            "name": "TailwindCSS",
+            "path": "/assets/logos/tailwindcss.svg"
+          }
         ]
       },
       {
@@ -182,7 +236,11 @@
           { "id": 1, "name": "C++", "path": "/assets/logos/cplusplus.svg" },
           { "id": 2, "name": "C#", "path": "/assets/logos/csharp.svg" },
           { "id": 3, "name": "Git", "path": "/assets/logos/git.svg" },
-          { "id": 4, "name": "Microsoft", "path": "/assets/logos/microsoft.svg" }
+          {
+            "id": 4,
+            "name": "Microsoft",
+            "path": "/assets/logos/microsoft.svg"
+          }
         ]
       },
       {
@@ -199,7 +257,11 @@
         "logo": "",
         "image": "/assets/projects/wordpress-theme.jpg",
         "tags": [
-          { "id": 1, "name": "WordPress", "path": "/assets/logos/wordpress.svg" },
+          {
+            "id": 1,
+            "name": "WordPress",
+            "path": "/assets/logos/wordpress.svg"
+          },
           { "id": 2, "name": "HTML5", "path": "/assets/logos/html5.svg" },
           { "id": 3, "name": "CSS3", "path": "/assets/logos/css3.svg" },
           { "id": 4, "name": "Vite.js", "path": "/assets/logos/vitejs.svg" }
@@ -222,7 +284,11 @@
           { "id": 1, "name": "Blazor", "path": "/assets/logos/blazor.svg" },
           { "id": 2, "name": "Azure", "path": "/assets/logos/azure.svg" },
           { "id": 3, "name": "Stripe", "path": "/assets/logos/stripe.svg" },
-          { "id": 4, "name": "TailwindCSS", "path": "/assets/logos/tailwindcss.svg" }
+          {
+            "id": 4,
+            "name": "TailwindCSS",
+            "path": "/assets/logos/tailwindcss.svg"
+          }
         ]
       }
     ]

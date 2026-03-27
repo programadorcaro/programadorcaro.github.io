@@ -11,9 +11,9 @@ export function FooterSection() {
 
       <div className="w-full">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="text-base font-semibold text-white">Latest Videos</h3>
+          <h3 className="text-base font-semibold text-white">{footer.latestVideosTitle}</h3>
           <a href={footer.youtubeChannelUrl} target="_blank" rel="noreferrer" className="text-sm text-neutral-300 hover:text-white">
-            Visit channel
+            {footer.visitChannelLabel}
           </a>
         </div>
         <YoutubeCarousel videos={footer.youtubeVideos} />

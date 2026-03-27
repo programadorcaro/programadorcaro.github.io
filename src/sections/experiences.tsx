@@ -5,7 +5,7 @@ import { site } from '../data/site'
 export function ExperiencesSection() {
   const { experiences } = site
   return (
-    <Section className="w-full">
+    <Section id="experience" className="w-full">
       <Timeline title={experiences.sectionTitle} items={experiences.items} />
     </Section>
   )
