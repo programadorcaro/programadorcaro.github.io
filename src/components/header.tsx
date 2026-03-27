@@ -9,6 +9,16 @@ type HeaderProps = {
 
 export function Header({ brandName, nav }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const handleNavClick = (href: string) => {
+    setIsOpen(false)
+    if (!href.startsWith('#')) return
+
+    const target = document.querySelector<HTMLElement>(href)
+    if (!target) return
+
+    window.history.replaceState(null, '', href)
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <header className="fixed z-20 w-full bg-primary/40 px-3 py-4 backdrop-blur-lg">
@@ -29,7 +39,7 @@ export function Header({ brandName, nav }: HeaderProps) {
           </button>
 
           <nav className="hidden sm:flex">
-            <Navigation nav={nav} />
+            <Navigation nav={nav} onNavigate={handleNavClick} />
           </nav>
         </div>
       </div>
@@ -43,7 +53,7 @@ export function Header({ brandName, nav }: HeaderProps) {
           transition={{ duration: 1 }}
         >
           <nav className="py-12">
-            <Navigation nav={nav} />
+            <Navigation nav={nav} onNavigate={handleNavClick} />
           </nav>
         </motion.div>
       )}
@@ -51,12 +61,19 @@ export function Header({ brandName, nav }: HeaderProps) {
   )
 }
 
-function Navigation({ nav }: { nav: NavItem[] }) {
+function Navigation({ nav, onNavigate }: { nav: NavItem[]; onNavigate: (href: string) => void }) {
   return (
     <ul className="nav-ul">
       {nav.map((item) => (
         <li key={item.href} className="nav-li">
-          <a className="nav-link" href={item.href}>
+          <a
+            className="nav-link"
+            href={item.href}
+            onClick={(event) => {
+              event.preventDefault()
+              onNavigate(item.href)
+            }}
+          >
             {item.label}
           </a>
         </li>

@@ -20,11 +20,11 @@ export function AboutSection() {
       <div className="mt-12 grid grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-6">
         <div className="grid-1 grid-default-color flex items-end">
           <img src={assetUrl(about.intro.image)} className={about.intro.imageClass} alt="" />
-          <div className="z-10">
-            <p className="headtext">{about.intro.headline}</p>
-            <p className="subtext">{about.intro.body}</p>
+          <div className="z-10 absolute inset-x-0 b-0 p-6 bg-black/20 backdrop-blur-lg flex flex-col gap-2">
+            <p className="text-2xl font-bold">{about.intro.headline}</p>
+            <p className="text-sm text-white/76">{about.intro.body}</p>
           </div>
-          <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-1/2 bg-gradient-to-t from-indigo sm:h-1/3" />
+          <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-1/2 bg-linear-to-t from-indigo sm:h-1/3" />
         </div>
 
         <div className="grid-2 grid-default-color">

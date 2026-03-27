@@ -26,10 +26,17 @@ const mobileState = {
 export function ModelPlayground() {
   const isMobile = useIsMobile()
   const activeState = isMobile ? mobileState : desktopState
+  const canvasShadows = isMobile ? false : 'percentage'
+  const frameLoopMode = isMobile ? 'demand' : 'always'
 
   return (
     <section className="pointer-events-none absolute inset-0 z-0" style={{ touchAction: 'pan-y' }}>
-      <Canvas shadows camera={{ position: activeState.camera, fov: 40 }}>
+      <Canvas
+        dpr={isMobile ? [1, 1.1] : [1, 1.35]}
+        shadows={canvasShadows}
+        frameloop={frameLoopMode}
+        camera={{ position: activeState.camera, fov: 40 }}
+      >
         <color attach="background" args={['#0b1020']} />
         <ambientLight intensity={activeState.lightIntensity * 0.3} />
         <directionalLight castShadow position={[6, 10, 8]} intensity={activeState.lightIntensity} />
@@ -125,11 +132,14 @@ function useMobileScrollProgress(isMobile: boolean) {
     }
 
     let frame = 0
+    let previousProgress = -1
     const onScroll = () => {
       cancelAnimationFrame(frame)
       frame = window.requestAnimationFrame(() => {
         const range = Math.max(window.innerHeight * 0.7, 1)
         const nextProgress = Math.min(Math.max(window.scrollY / range, 0), 1)
+        if (Math.abs(nextProgress - previousProgress) < 0.01) return
+        previousProgress = nextProgress
         setProgress(nextProgress)
       })
     }

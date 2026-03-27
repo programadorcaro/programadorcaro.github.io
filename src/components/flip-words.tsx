@@ -11,6 +11,7 @@ type FlipWordsProps = {
 export function FlipWords({ words, duration = 3000, className }: FlipWordsProps) {
   const [currentWord, setCurrentWord] = useState(words[0] ?? '')
   const [isAnimating, setIsAnimating] = useState(false)
+  const fallbackWord = getLongestWord(words)
 
   const startAnimation = useCallback(() => {
     const nextWord = words[words.indexOf(currentWord) + 1] || words[0] || ''
@@ -29,38 +30,48 @@ export function FlipWords({ words, duration = 3000, className }: FlipWordsProps)
   }, [isAnimating, duration, startAnimation])
 
   return (
-    <AnimatePresence onExitComplete={() => setIsAnimating(false)}>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 10 }}
-        exit={{ opacity: 0, y: -40, x: 40, filter: 'blur(8px)', scale: 2, position: 'absolute' }}
-        className={twMerge('relative z-10 inline-block text-left', className)}
-        key={currentWord}
-      >
-        {currentWord.split(' ').map((word, wordIndex) => (
-          <motion.span
-            key={`${word}-${wordIndex}`}
-            initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ delay: wordIndex * 0.3, duration: 0.3 }}
-            className="inline-block whitespace-nowrap"
-          >
-            {word.split('').map((letter, letterIndex) => (
-              <motion.span
-                key={`${word}-${letter}-${letterIndex}`}
-                initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ delay: wordIndex * 0.3 + letterIndex * 0.05, duration: 0.2 }}
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            ))}
-            <span className="inline-block">&nbsp;</span>
-          </motion.span>
-        ))}
-      </motion.div>
-    </AnimatePresence>
+    <span className={twMerge('relative inline-flex min-h-[1.1em] items-start text-left', className)}>
+      <span className="invisible whitespace-pre" aria-hidden="true">
+        {fallbackWord}
+      </span>
+      <AnimatePresence mode="wait" onExitComplete={() => setIsAnimating(false)}>
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 10 }}
+          exit={{ opacity: 0, y: -40, x: 40, filter: 'blur(8px)', scale: 1.05 }}
+          className="absolute left-0 top-0 z-10 inline-block"
+          key={currentWord}
+        >
+          {currentWord.split(' ').map((word, wordIndex) => (
+            <motion.span
+              key={`${word}-${wordIndex}`}
+              initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ delay: wordIndex * 0.3, duration: 0.3 }}
+              className="inline-block whitespace-nowrap"
+            >
+              {word.split('').map((letter, letterIndex) => (
+                <motion.span
+                  key={`${word}-${letter}-${letterIndex}`}
+                  initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: wordIndex * 0.3 + letterIndex * 0.05, duration: 0.2 }}
+                  className="inline-block"
+                >
+                  {letter}
+                </motion.span>
+              ))}
+              <span className="inline-block">&nbsp;</span>
+            </motion.span>
+          ))}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   )
+}
+
+function getLongestWord(words: string[]) {
+  if (words.length === 0) return ''
+  return words.reduce((longest, current) => (current.length > longest.length ? current : longest), words[0])
 }

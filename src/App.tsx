@@ -22,7 +22,7 @@ function App() {
         className="relative isolate flex h-[70dvh] w-full items-start justify-center overflow-hidden md:justify-start mt-0 md:mt-0"
       >
         <ModelPlayground />
-        <HeroText hero={site.hero} />
+        <HeroText hero={site.hero} ctas={site.footer.ctas} />
         <div className="inset-0 z-20" />
       </Section>
 

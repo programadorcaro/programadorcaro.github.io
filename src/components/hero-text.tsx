@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
-import type { SiteContent } from '../data/site'
+import type { FooterCtas, SiteContent } from '../data/site'
 import { FlipWords } from './flip-words'
 
 type HeroTextProps = {
   hero: SiteContent['hero']
+  ctas: FooterCtas
 }
 
 const variants = {
@@ -11,7 +12,7 @@ const variants = {
   visible: { opacity: 1, x: 0 },
 }
 
-export function HeroText({ hero }: HeroTextProps) {
+export function HeroText({ hero, ctas }: HeroTextProps) {
   const words = hero.flipWords
   const { desktop, mobile } = hero
 
@@ -32,6 +33,7 @@ export function HeroText({ hero }: HeroTextProps) {
             {desktop.lineAfterFlip}
           </motion.p>
         </div>
+        <HeroCtas ctas={ctas} className="mt-4 w-full max-w-2xl flex flex-col gap-3 sm:flex-row sm:gap-4" transitionDelay={2.1} />
       </div>
 
       <div className="flex flex-col space-y-6 md:hidden">
@@ -49,7 +51,47 @@ export function HeroText({ hero }: HeroTextProps) {
             {mobile.lineAfterFlip}
           </motion.p>
         </div>
+        <HeroCtas ctas={ctas} className="mt-2 flex w-full flex-col gap-3 sm:flex-row sm:gap-4" transitionDelay={2.1} />
       </div>
     </div>
+  )
+}
+
+function HeroCtas({
+  ctas,
+  className,
+  transitionDelay,
+}: {
+  ctas: FooterCtas
+  className: string
+  transitionDelay: number
+}) {
+  return (
+    <motion.div
+      className={className}
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      transition={{ delay: transitionDelay }}
+    >
+      <a
+        href={ctas.github.href}
+        target="_blank"
+        rel="noreferrer"
+        className="flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-4 text-center text-base font-semibold text-primary transition-opacity hover:opacity-90"
+      >
+        <img src={ctas.github.icon} className="h-7 w-7 shrink-0" alt="" aria-hidden />
+        {ctas.github.label}
+      </a>
+      <a
+        href={ctas.linkedIn.href}
+        target="_blank"
+        rel="noreferrer"
+        className="flex flex-1 items-center justify-center rounded-xl border border-white/15 bg-linear-to-b from-royal to-lavender px-6 py-4 text-center text-base font-semibold text-white shadow-md shadow-royal/25 transition-[opacity,filter] hover:bg-white hover:outline-1 brightness-[1.03]"
+      >
+        {ctas.linkedIn.label}
+      </a>
+
+    </motion.div>
   )
 }

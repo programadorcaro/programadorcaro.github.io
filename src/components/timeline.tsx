@@ -28,7 +28,7 @@ export function Timeline({ title, items }: TimelineProps) {
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1])
 
   return (
-    <div className="" ref={containerRef}>
+    <div className="relative" ref={containerRef}>
       <h2 className="text-heading">{title}</h2>
       <div ref={ref} className="relative pb-20">
         {items.map((item, index) => (

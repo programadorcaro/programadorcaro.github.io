@@ -54,9 +54,25 @@ body {
   font-family: 'Funnel Display', sans-serif;
   color: white;
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
   overflow-x: hidden;
 }
 
+.youtube-carousel-slide {
+  flex: 0 0 calc((100% - var(--carousel-gap) * 0.2) / 1.2);
+}
+
+@media (min-width: 768px) {
+  .youtube-carousel-slide {
+    flex: 0 0 calc((100% - var(--carousel-gap) * 2.2) / 3.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .youtube-carousel-slide {
+    flex: 0 0 calc((100% - var(--carousel-gap) * 4.2) / 5.2);
+  }
+}
 
 .hover-animation {
   @apply hover:-translate-y-1 duration-200;

@@ -55,6 +55,22 @@ export type SocialLink = {
   icon: string
 }
 
+export type FooterContactLink = {
+  label: string
+  href: string
+  value: string
+}
+
+export type YoutubeVideoItem = {
+  id: string
+  title: string
+}
+
+export type FooterCtas = {
+  linkedIn: { label: string; href: string }
+  github: { label: string; href: string; icon: string }
+}
+
 export type FloatingCardStyle = {
   rotate: string
   top?: string
@@ -155,6 +171,10 @@ export type SiteContent = {
   }
   footer: {
     legalLinks: { label: string; href: string }[]
+    contactLinks: FooterContactLink[]
+    ctas: FooterCtas
+    youtubeChannelUrl: string
+    youtubeVideos: YoutubeVideoItem[]
     copyright: string
   }
   socials: SocialLink[]
@@ -206,13 +226,13 @@ type LucasCv = {
     projects?: (
       | string
       | {
-          title: string
-          period?: { start?: string; end?: string }
-          description?: string
-          skills?: string[]
-          url?: string
-          starred?: boolean
-        }
+        title: string
+        period?: { start?: string; end?: string }
+        description?: string
+        skills?: string[]
+        url?: string
+        starred?: boolean
+      }
     )[]
   }[]
   education: {
@@ -600,6 +620,49 @@ export const site: SiteContent = {
     legalLinks: [
       { label: 'Main GitHub', href: lucas.personal_info.contacts.github_main },
       { label: 'Secondary GitHub', href: lucas.personal_info.contacts.github_secondary },
+    ],
+    contactLinks: [
+      {
+        label: 'Main GitHub',
+        href: 'https://github.com/lucasmaiaesilva',
+        value: 'github.com/lucasmaiaesilva',
+      },
+      {
+        label: 'Second GitHub',
+        href: 'https://github.com/programadorcaro',
+        value: 'github.com/programadorcaro',
+      },
+      {
+        label: 'WhatsApp',
+        href: 'https://wa.me/5531993190165',
+        value: '+55 31 99319-0165',
+      },
+      {
+        label: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/lucasmaiaesilva/',
+        value: 'linkedin.com/in/lucasmaiaesilva',
+      },
+      {
+        label: 'YouTube Channel',
+        href: 'https://www.youtube.com/@programadorcaro_',
+        value: 'youtube.com/@programadorcaro_',
+      },
+    ],
+    ctas: {
+      linkedIn: {
+        label: 'Check my LinkedIn',
+        href: 'https://www.linkedin.com/in/lucasmaiaesilva/',
+      },
+      github: {
+        label: '',
+        href: 'https://github.com/lucasmaiaesilva',
+        icon: '/assets/logos/github.svg',
+      },
+    },
+    youtubeChannelUrl: 'https://www.youtube.com/@programadorcaro_',
+    youtubeVideos: [
+      { id: 'h-LYdI_eNeA', title: 'Programador Caro - Video 1' },
+      { id: 'vB8JPyotv5U', title: 'Programador Caro - Video 2' },
     ],
     copyright: `© ${new Date().getFullYear()} ${lucas.personal_info.name}. All rights reserved.`,
   },
