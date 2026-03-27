@@ -32,7 +32,7 @@ export function AboutFloatingCard({ card, containerRef }: AboutFloatingCardProps
 
   return (
     <motion.div
-      className="absolute w-[12rem] cursor-grab rounded-full bg-storm px-1 py-4 text-center text-xl font-extralight ring ring-gray-700"
+      className="absolute w-48 cursor-grab rounded-full bg-storm px-1 py-4 text-center text-xl font-extralight ring ring-gray-700"
       style={style}
       whileHover={{ scale: 1.05 }}
       drag
