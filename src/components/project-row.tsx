@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useState, type Dispatch, type KeyboardEvent, type SetStateAction } from 'react'
 import { ProjectDetails } from './project-details'
 import type { ProjectItem } from '../data/site'
 
@@ -26,11 +26,23 @@ export function ProjectRow({
   arrowUpIcon,
 }: ProjectRowProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const openDetails = () => setIsOpen(true)
+
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      openDetails()
+    }
+  }
 
   return (
     <>
       <div
         className="flex-wrap items-center justify-between space-y-14 py-10 sm:flex sm:space-y-0"
+        role="button"
+        tabIndex={0}
+        onClick={openDetails}
+        onKeyDown={handleKeyDown}
         onMouseEnter={() => setPreview(image)}
         onMouseLeave={() => setPreview(null)}
       >
@@ -42,12 +54,12 @@ export function ProjectRow({
             ))}
           </div>
         </div>
-        <button type="button" onClick={() => setIsOpen(true)} className="hover-animation flex cursor-pointer items-center gap-1">
+        <span className="hover-animation flex cursor-pointer items-center gap-1">
           {readMoreLabel}
           <img src={`/${arrowIcon}`} className="w-5" alt="" />
-        </button>
+        </span>
       </div>
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-700 to-transparent" />
+      <div className="h-px w-full bg-linear-to-r from-transparent via-neutral-700 to-transparent" />
       {isOpen && (
         <ProjectDetails
           title={title}

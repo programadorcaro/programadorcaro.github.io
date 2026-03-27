@@ -13,12 +13,25 @@ export type ProjectTag = {
 
 export type ProjectItem = {
   id: number
+  company: string
   title: string
   description: string
   subDescription: string[]
   href: string
   logo: string
   image: string
+  tags: ProjectTag[]
+}
+
+export type CompanyProjectItem = {
+  id: string
+  company: string
+  role: string
+  period: string
+  title: string
+  description: string
+  screenshot: string
+  href: string
   tags: ProjectTag[]
 }
 
@@ -108,6 +121,11 @@ export type SiteContent = {
     sectionTitle: string
     items: ExperienceItem[]
   }
+  companyProjects: {
+    sectionTitle: string
+    sectionDescription: string
+    items: CompanyProjectItem[]
+  }
   educationAchievements: {
     sectionTitle: string
     educationTitle: string
@@ -181,10 +199,21 @@ type LucasCv = {
       end: string
       duration: string
     }
+    image?: string
     responsibilities?: string[]
     achievements?: string[]
     tech_stack: string[]
-    project?: string
+    projects?: (
+      | string
+      | {
+          title: string
+          period?: { start?: string; end?: string }
+          description?: string
+          skills?: string[]
+          url?: string
+          starred?: boolean
+        }
+    )[]
   }[]
   education: {
     institution: string
@@ -200,6 +229,8 @@ type LucasCv = {
 }
 
 const lucas = lucasRaw as LucasCv
+type ExperienceProject = NonNullable<LucasCv['experience'][number]['projects']>[number]
+type ExperienceProjectObject = Exclude<ExperienceProject, string>
 
 const availableLogoSlugs = new Set([
   'auth0',
@@ -229,6 +260,34 @@ const availableLogoSlugs = new Set([
   'wordpress',
 ])
 
+const techToLogoPath: Record<string, string> = {
+  auth0: '/assets/logos/auth0.svg',
+  azure: '/assets/logos/azure.svg',
+  blazor: '/assets/logos/blazor.svg',
+  cplusplus: '/assets/logos/cplusplus.svg',
+  csharp: '/assets/logos/csharp.svg',
+  css3: '/assets/logos/css3.svg',
+  dotnet: '/assets/logos/dotnet.svg',
+  dotnetcore: '/assets/logos/dotnetcore.svg',
+  git: '/assets/logos/git.svg',
+  github: '/assets/logos/github.svg',
+  html5: '/assets/logos/html5.svg',
+  javascript: '/assets/logos/javascript.svg',
+  jest: '/assets/logos/jest.svg',
+  microsoft: '/assets/logos/microsoft.svg',
+  microsoftsqlserver: '/assets/logos/microsoftsqlserver.svg',
+  playwright: '/assets/logos/playwright.svg',
+  react: '/assets/logos/react.svg',
+  sqlite: '/assets/logos/sqlite.svg',
+  storybook: '/assets/logos/storybook.svg',
+  stripe: '/assets/logos/stripe.svg',
+  tailwindcss: '/assets/logos/tailwindcss.svg',
+  threejs: '/assets/logos/threejs.svg',
+  vitejs: '/assets/logos/vitejs.svg',
+  visualstudiocode: '/assets/logos/visualstudiocode.svg',
+  wordpress: '/assets/logos/wordpress.svg',
+}
+
 function formatMonthYear(value: string) {
   if (!value || value.toLowerCase() === 'present') return 'Present'
   const [year, month] = value.split('-')
@@ -244,34 +303,36 @@ function toLogoSlug(tech: string) {
     'c#': 'csharp',
     '.net': 'dotnet',
     '.net core': 'dotnetcore',
+    typescript: 'visualstudiocode',
+    'next.js': 'vitejs',
+    'node.js': 'javascript',
+    'react native': 'react',
+    redux: 'react',
+    'vue.js': 'javascript',
+    vuex: 'javascript',
+    graphql: 'microsoftsqlserver',
+    stylus: 'css3',
+    'isomorphic apps': 'javascript',
+    'styled-components': 'css3',
+    'styled components': 'css3',
+    'rest apis': 'javascript',
+    'radix ui': 'react',
+    mixpanel: 'microsoft',
+    figma: 'microsoft',
     'tailwind css': 'tailwindcss',
     'plotly.js': 'javascript',
-    'node.js': 'nodejs',
-    typescript: 'typescript',
-    'react native': 'react',
-    'radix ui': 'radixui',
-    'rest apis': 'restapis',
-    graphql: 'graphql',
     storybook: 'storybook',
-    'styled components': 'css3',
-    'styled-components': 'css3',
-    mixpanel: 'mixpanel',
     'snowflake': 'microsoftsqlserver',
-    figma: 'figma',
-    'next.js': 'nextjs',
-    'vue.js': 'vuejs',
-    vuex: 'vuex',
     jest: 'jest',
     playwright: 'playwright',
-    'isomorphic apps': 'isomorphicapps',
-    stylus: 'stylus',
   }
   return aliases[normalized] ?? normalized.replace(/[.+/]/g, '').replace(/\s+/g, '')
 }
 
 function getLogoPath(tech: string) {
   const slug = toLogoSlug(tech)
-  return availableLogoSlugs.has(slug) ? `/assets/logos/${slug}.svg` : '/assets/logos/react.svg'
+  if (!availableLogoSlugs.has(slug)) return '/assets/logos/react.svg'
+  return techToLogoPath[slug] ?? '/assets/logos/react.svg'
 }
 
 function toProjectTag(tech: string, index: number): ProjectTag {
@@ -280,6 +341,75 @@ function toProjectTag(tech: string, index: number): ProjectTag {
     name: tech,
     path: getLogoPath(tech),
   }
+}
+
+function isProjectObject(project: ExperienceProject): project is ExperienceProjectObject {
+  return typeof project !== 'string'
+}
+
+function dedupeProjectTags(tags?: ProjectTag[] | null): ProjectTag[] {
+  const seen = new Set<string>()
+  const deduped: ProjectTag[] = []
+  for (const tag of tags ?? []) {
+    if (seen.has(tag.path)) continue
+    seen.add(tag.path)
+    deduped.push({ ...tag, id: deduped.length + 1 })
+  }
+  return deduped
+}
+
+function normalizeExperienceProjects(item: LucasCv['experience'][number], index: number): CompanyProjectItem[] {
+  const period = `${formatMonthYear(item.period.start)} - ${formatMonthYear(item.period.end)}`
+  const defaultDescription = item.achievements?.[0] ?? item.responsibilities?.[0] ?? `Project delivered at ${item.company}`
+  const defaultTags = dedupeProjectTags(item.tech_stack?.slice(0, 6).map((tech, techIndex) => toProjectTag(tech, techIndex)))
+  const defaultScreenshot = item.image ?? '/assets/projects/pluspower.png'
+  const list = item.projects ?? []
+
+  if (list.length === 0) {
+    return [
+      {
+        id: `${item.company}-${index}-0`,
+        company: item.company,
+        role: item.role,
+        period,
+        title: `Project at ${item.company}`,
+        description: defaultDescription,
+        screenshot: defaultScreenshot,
+        href: '',
+        tags: defaultTags,
+      },
+    ]
+  }
+
+  return list.map((project, projectIndex) => {
+    if (typeof project === 'string') {
+      return {
+        id: `${item.company}-${index}-${projectIndex}`,
+        company: item.company,
+        role: item.role,
+        period,
+        title: project,
+        description: defaultDescription,
+        screenshot: defaultScreenshot,
+        href: '',
+        tags: defaultTags,
+      }
+    }
+
+    const stack = project.skills ?? item.tech_stack ?? []
+    const projectTags = dedupeProjectTags(stack.slice(0, 6).map((tech, techIndex) => toProjectTag(tech, techIndex)))
+    return {
+      id: `${item.company}-${index}-${projectIndex}`,
+      company: item.company,
+      role: item.role,
+      period,
+      title: project.title,
+      description: project.description ?? defaultDescription,
+      screenshot: defaultScreenshot,
+      href: project.url ?? '',
+      tags: projectTags,
+    }
+  })
 }
 
 function toExperienceItem(item: LucasCv['experience'][number]): ExperienceItem {
@@ -301,6 +431,11 @@ const orbitSkills = Array.from(
     ...lucas.skills.testing,
     ...lucas.skills.tools,
     ...lucas.skills.data_visualization,
+    ...lucas.experience.flatMap((item) =>
+      (item.projects ?? [])
+        .filter(isProjectObject)
+        .flatMap((project) => project.skills ?? []),
+    ),
   ]),
 )
   .map((skill) => toLogoSlug(skill))
@@ -379,11 +514,16 @@ export const site: SiteContent = {
     arrowIcon: 'assets/arrow-right.svg',
     closeIcon: 'assets/close.svg',
     arrowUpIcon: 'assets/arrow-up.svg',
-    items: lucas.experience.slice(0, 5).map((item, index) => {
-      const summary = item.project ?? `Key initiatives delivered at ${item.company}`
-      const tags = item.tech_stack.slice(0, 4).map((tech, techIndex) => toProjectTag(tech, techIndex))
+    items: lucas.experience.map((item, index) => {
+      const firstProject =
+        (item.projects ?? []).find(isProjectObject) ?? null
+      const summary =
+        firstProject?.description ?? item.achievements?.[0] ?? item.responsibilities?.[0] ?? `Key initiatives delivered at ${item.company}`
+      const sourceSkills = firstProject?.skills?.length ? firstProject.skills : item.tech_stack ?? []
+      const tags = dedupeProjectTags(sourceSkills.slice(0, 6).map((tech, techIndex) => toProjectTag(tech, techIndex))).slice(0, 4)
       return {
         id: index + 1,
+        company: item.company,
         title: `${item.company} - ${item.role}`,
         description: summary,
         subDescription: [
@@ -392,7 +532,7 @@ export const site: SiteContent = {
         ],
         href: '',
         logo: '',
-        image: tags[0]?.path ?? '/assets/logos/react.svg',
+        image: item.image ?? tags[0]?.path ?? '/assets/logos/react.svg',
         tags,
       }
     }),
@@ -400,6 +540,11 @@ export const site: SiteContent = {
   experiences: {
     sectionTitle: 'Work Experience',
     items: lucas.experience.map(toExperienceItem),
+  },
+  companyProjects: {
+    sectionTitle: 'Projects',
+    sectionDescription: 'Projects linked to each company role. This section is ready for LinkedIn public export enrichment.',
+    items: lucas.experience.flatMap(normalizeExperienceProjects),
   },
   educationAchievements: {
     sectionTitle: 'Education & Achievements',

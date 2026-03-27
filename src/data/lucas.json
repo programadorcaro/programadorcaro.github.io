@@ -36,6 +36,51 @@
   },
   "experience": [
     {
+      "company": "Shift Paradigm",
+      "role": "Senior Software Engineer",
+      "period": {
+        "start": "2025-09",
+        "end": "2026-01",
+        "duration": "5 months"
+      },
+      "image": "/assets/projects/timbertech.png",
+      "projects": [
+        {
+          "title": "TimberTech – AEM EDS Marketing Site (Multi-Brand)",
+          "period": { "start": "2025-09", "end": "2026-01" },
+          "description": "AEM Edge Delivery Services (EDS) block collection for TimberTech marketing site (deck/railing, B2B/B2C, multi-brand). Delivered reusable mobile carousel (JavaScript ES modules, CSS) with swipe, pagination, and media-text-split with image slider and video embeds (YouTube, Vimeo, MP4); mobile-first header and navigation; ecommerce and checkout blocks; video and hero enhancements. Supported multi-brand experiences (e.g. Lowes, Home Depot). Centralized copy via placeholders and config for easier updates and localization.",
+          "skills": [
+            "JavaScript",
+            "CSS",
+            "Adobe Experience Manager",
+            "AEM",
+            "Blocked based architecture",
+            "Git",
+            "Github"
+          ],
+          "starred": true,
+          "url": "https://www.timbertech.com/"
+        },
+        {
+          "title": "Evident Scientific – EDS Site Rebrand & Design System Rollout",
+          "period": { "start": "2025-09", "end": "2025-12" },
+          "description": "B2B corporate website (EDS block-based). Drove design system rebrand across 15+ blocks (blog, hero, header, modal, product-details, video, etc.); enhanced search and results layout; improved product and fragment pages and video/modal UX. consistent rebrand, responsiveness, and accessibility (focus, overlay) on critical components.",
+          "skills": [
+            "JavaScript",
+            "CSS",
+            "Adobe Experience Manager",
+            "AEM",
+            "Blocked based architecture",
+            "Git",
+            "Github",
+            "Playwright"
+          ],
+          "starred": true,
+          "url": "https://evidentscientific.com/en/"
+        }
+      ]
+    },
+    {
       "company": "BairesDev",
       "role": "Senior Software Engineer",
       "period": {
@@ -43,9 +88,31 @@
         "end": "2025-10",
         "duration": "3 years 7 months"
       },
+      "image": "/assets/projects/pluspower.png",
       "type": "Remote",
       "team_size": 7,
-      "project": "Real-time trading dashboard for battery energy storage optimization",
+      "projects": [
+        {
+          "title": "ADA Trading Dashboard – Real-Time Battery Storage",
+          "period": { "start": "2021-10", "end": "2025-08" },
+          "description": "Real-time trading platform for battery energy storage in the ERCOT market. Enabled 10 traders to make data-driven decisions via multi-axis charts (Plotly.js), dynamic bid/offer forms with capacity validation, and SSG/SSR caching that cut backend requests by 90%.",
+          "skills": [
+            "TypeScript",
+            "Next.js",
+            "React.js",
+            "Node.js",
+            "Snowflake",
+            "Plotly.js",
+            "Storybook",
+            "Tailwind CSS",
+            "shadcn ui",
+            "Radix UI",
+            "Figma"
+          ],
+          "starred": true,
+          "url": "https://www.pluspower.com/about/"
+        }
+      ],
       "responsibilities": [
         "Developed real-time trading platform",
         "Built advanced data visualization tools",
@@ -79,11 +146,31 @@
         "end": "2022-03",
         "duration": "7 months"
       },
+      "image": "/assets/projects/gronda.png",
       "team": {
         "frontend": 2,
         "backend": 4,
         "design": 2
       },
+      "projects": [
+        {
+          "title": "Gronda App and Web Experience",
+          "period": { "start": "2021-09", "end": "2022-03" },
+          "description": "Led UI/UX implementation across React Native mobile and Next.js web experiences, collaborating with design and backend teams to improve user experience and data reliability.",
+          "skills": [
+            "React Native",
+            "Next.js",
+            "TypeScript",
+            "Redux",
+            "Styled Components",
+            "REST APIs",
+            "Mixpanel",
+            "Jest"
+          ],
+          "starred": false,
+          "url": ""
+        }
+      ],
       "responsibilities": [
         "Led UI/UX implementation",
         "Worked on React Native app and Next.js web",
@@ -113,7 +200,25 @@
         "end": "2021-09",
         "duration": "1 year"
       },
-      "project": "Carat global commerce platform (Fiserv)",
+      "image": "/assets/projects/caratfiserv.png",
+      "projects": [
+        {
+          "title": "Carat Control Center – Payments Dashboard & Statements",
+          "period": { "start": "2020-10", "end": "2021-09" },
+          "description": "Secure, compliant front-end for Fiserv's Carat global commerce platform—trusted by 70% of the world's leading brands. Delivered Control Center views for payment visibility and historical statements; co-led alignment with external component library team on props, events, and API contracts. Banking-grade UX under strict information security requirements.",
+          "skills": [
+            "JavaScript",
+            "TypeScript",
+            "React.js",
+            "styled-components",
+            "redux.js",
+            "tortoise svn",
+            "Node.js"
+          ],
+          "starred": true,
+          "url": ""
+        }
+      ],
       "responsibilities": [
         "Developed payment dashboards",
         "Worked on design systems",
@@ -140,7 +245,33 @@
         "end": "2020-04",
         "duration": "2 years"
       },
-      "projects": ["Veloe", "Descomplica", "ME (B2B logistics)"],
+      "image": "/assets/projects/veloe.png",
+      "projects": [
+        {
+          "title": "Veloe – GraphQL Communication Layer",
+          "period": { "start": "2018-03", "end": "2020-06" },
+          "description": "GraphQL layer between backend and React/TypeScript frontend for Veloe (veloe.com.br). Addressed REST inconsistencies, over-fetching, and weak API contract. Reduced request volume by 30%+, ensured only required data was fetched, and improved frontend–backend reliability. Tests with Jest and Node tooling.",
+          "skills": ["TypeScript", "React.js", "GraphQL", "Node.js", "Jest"],
+          "starred": true,
+          "url": "https://veloe.com.br/tag/elo"
+        },
+        {
+          "title": "Descomplica",
+          "period": { "start": "", "end": "" },
+          "description": "",
+          "skills": [],
+          "starred": false,
+          "url": ""
+        },
+        {
+          "title": "ME (B2B logistics)",
+          "period": { "start": "", "end": "" },
+          "description": "",
+          "skills": [],
+          "starred": false,
+          "url": ""
+        }
+      ],
       "achievements": [
         "Reduced API requests by 30%+ using GraphQL",
         "Fixed critical production issues",
@@ -164,6 +295,7 @@
         "end": "2018-05",
         "duration": "1 year"
       },
+      "image": "/assets/projects/oi.png",
       "location": "São Paulo, Brazil",
       "client": "Oi",
       "achievements": [
@@ -171,7 +303,17 @@
         "Led isomorphic architecture implementation",
         "Improved performance at scale"
       ],
-      "tech_stack": ["JavaScript", "Node.js", "Stylus", "Isomorphic apps"]
+      "tech_stack": ["JavaScript", "Node.js", "Stylus", "Isomorphic apps"],
+      "projects": [
+        {
+          "title": "Oi Digital Experience Platform",
+          "period": { "start": "2017-06", "end": "2018-05" },
+          "description": "Frontend delivery for a high-traffic telecom platform with focus on performance and isomorphic architecture patterns.",
+          "skills": ["JavaScript", "Node.js", "Stylus", "Isomorphic apps"],
+          "starred": false,
+          "url": ""
+        }
+      ]
     }
   ],
   "education": [

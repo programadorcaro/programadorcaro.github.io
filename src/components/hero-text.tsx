@@ -43,7 +43,7 @@ export function HeroText({ hero }: HeroTextProps) {
             {mobile.lineBeforeFlip}
           </motion.p>
           <motion.div variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.5 }}>
-            <FlipWords words={words} className="text-7xl font-bold text-white" />
+            <FlipWords words={words} className="text-5xl font-bold text-white my-4" />
           </motion.div>
           <motion.p className="text-4xl font-black text-neutral-300" variants={variants} initial="hidden" animate="visible" transition={{ delay: 1.8 }}>
             {mobile.lineAfterFlip}
