@@ -647,6 +647,11 @@ export const site: SiteContent = {
         href: 'https://www.youtube.com/@programadorcaro_',
         value: 'youtube.com/@programadorcaro_',
       },
+      {
+        label: 'Email',
+        href: 'mailto:lucasmaiaesilva@gmail.com',
+        value: 'lucasmaiaesilva@gmail.com',
+      },
     ],
     ctas: {
       linkedIn: {

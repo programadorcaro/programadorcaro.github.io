@@ -11,6 +11,7 @@ import { ExperiencesSection } from './sections/experiences'
 import { FooterSection } from './sections/footer'
 import { ProjectsSection } from './sections/projects'
 import { TestimonialSection } from './sections/testimonial'
+import { CSSDrawingsSection } from './sections/css-drawings-section'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <ExperiencesSection />
         <CompanyProjectsSection />
         <EducationAchievementsSection />
+        <CSSDrawingsSection />
         <TestimonialSection />
         <ContactSection />
         <FooterSection />
