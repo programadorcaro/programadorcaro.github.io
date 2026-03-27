@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import type { NavItem } from '../data/site'
 
-export function Header() {
+type HeaderProps = {
+  brandName: string
+  nav: NavItem[]
+}
+
+export function Header({ brandName, nav }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="w-full px-3 py-4 bg-primary/40 backdrop-blur-lg fixed z-20">
+    <header className="fixed z-20 w-full bg-primary/40 px-3 py-4 backdrop-blur-lg">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-neutral-400 transition-colors hover:text-white">
-            Lucas (programadorcaro)
+            {brandName}
           </a>
 
           <button
@@ -23,7 +29,7 @@ export function Header() {
           </button>
 
           <nav className="hidden sm:flex">
-            <Navigation />
+            <Navigation nav={nav} />
           </nav>
         </div>
       </div>
@@ -37,7 +43,7 @@ export function Header() {
           transition={{ duration: 1 }}
         >
           <nav className="py-12">
-            <Navigation />
+            <Navigation nav={nav} />
           </nav>
         </motion.div>
       )}
@@ -45,29 +51,16 @@ export function Header() {
   )
 }
 
-function Navigation() {
+function Navigation({ nav }: { nav: NavItem[] }) {
   return (
     <ul className="nav-ul">
-      <li className="nav-li">
-        <a className="nav-link" href="#home">
-          Home
-        </a>
-      </li>
-      <li className="nav-li">
-        <a className="nav-link" href="#about">
-          About
-        </a>
-      </li>
-      <li className="nav-li">
-        <a className="nav-link" href="#work">
-          Work
-        </a>
-      </li>
-      <li className="nav-li">
-        <a className="nav-link" href="#contact">
-          Contact
-        </a>
-      </li>
+      {nav.map((item) => (
+        <li key={item.href} className="nav-li">
+          <a className="nav-link" href={item.href}>
+            {item.label}
+          </a>
+        </li>
+      ))}
     </ul>
   )
 }
