@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://programadorcaro.github.io/sitemap.xml

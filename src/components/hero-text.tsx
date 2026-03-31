@@ -80,7 +80,7 @@ function HeroCtas({
         rel="noreferrer"
         className="flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-4 text-center text-base font-semibold text-primary transition-opacity hover:opacity-90"
       >
-        <img src={ctas.github.icon} className="h-7 w-7 shrink-0" alt="" aria-hidden />
+        <img src={ctas.github.icon} width={28} height={28} decoding="async" className="h-7 w-7 shrink-0" alt="" aria-hidden />
         {ctas.github.label}
       </a>
       <a

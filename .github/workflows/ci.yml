@@ -40,3 +40,25 @@ jobs:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID || 'service_wqaqblr' }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID || 'template_jiyk3x1' }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY || 'JUgKs-Z9Rviu3nrPw' }}
+
+      - name: Enforce bundle size budgets
+        run: |
+          node -e "const fs=require('fs');const path=require('path');const assetsDir=path.join(process.cwd(),'dist','assets');const jsFiles=fs.readdirSync(assetsDir).filter((f)=>f.endsWith('.js'));const sizes=jsFiles.map((file)=>({file,size:fs.statSync(path.join(assetsDir,file)).size}));const totalJs=sizes.reduce((sum,item)=>sum+item.size,0);const largest=sizes.reduce((max,item)=>item.size>max.size?item:max,{file:'',size:0});const totalLimit=1600*1024;const largestLimit=900*1024;console.log('Bundle budget report:',{totalJsBytes:totalJs,totalJsKb:(totalJs/1024).toFixed(2),largestChunk:largest.file,largestChunkBytes:largest.size,largestChunkKb:(largest.size/1024).toFixed(2),totalLimitKb:(totalLimit/1024).toFixed(0),largestLimitKb:(largestLimit/1024).toFixed(0)});if(totalJs>totalLimit||largest.size>largestLimit){console.error('Bundle budget exceeded.');process.exit(1);}"
+
+      - name: Run Lighthouse thresholds
+        run: |
+          python3 -m http.server 4173 --directory dist > /tmp/ci-http-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+
+          for i in $(seq 1 30); do
+            if curl -sSf http://127.0.0.1:4173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          npx --yes lighthouse "http://127.0.0.1:4173/" --only-categories=performance,seo --preset=desktop --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=./.lighthouse-desktop.json
+          npx --yes lighthouse "http://127.0.0.1:4173/" --only-categories=performance,seo --preset=perf --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=./.lighthouse-mobile.json
+
+          node -e "const fs=require('fs');const checks=[{name:'desktop',path:'./.lighthouse-desktop.json'},{name:'mobile',path:'./.lighthouse-mobile.json'}];for(const check of checks){const report=JSON.parse(fs.readFileSync(check.path,'utf8'));const performance=Math.round(report.categories.performance.score*100);const seo=Math.round(report.categories.seo.score*100);console.log(check.name,'scores =>', {performance,seo});if(performance<90||seo<95){console.error(`Lighthouse threshold failed for ${check.name}. Expected performance>=90 and seo>=95.`);process.exit(1);}}"
