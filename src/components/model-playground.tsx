@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
 import type { Group } from 'three'
 import { MOUSE, TOUCH } from 'three'
-import { Model } from './model'
 
 const desktopState = {
   position: [1.4, -1.75, 0] as [number, number, number],
@@ -25,29 +24,32 @@ const mobileState = {
 
 export function ModelPlayground() {
   const isMobile = useIsMobile()
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const shouldLoadModel = useDeferredModelLoad()
   const activeState = isMobile ? mobileState : desktopState
-  const canvasShadows = isMobile ? false : 'percentage'
-  const frameLoopMode = isMobile ? 'demand' : 'always'
+  const frameLoopMode = isMobile || prefersReducedMotion ? 'demand' : 'always'
 
   return (
     <section className="pointer-events-none absolute inset-0 z-0" style={{ touchAction: 'pan-y' }}>
       <Canvas
-        dpr={isMobile ? [1, 1.1] : [1, 1.35]}
-        shadows={canvasShadows}
+        dpr={isMobile ? [1, 1.05] : [1, 1.15]}
+        gl={{ antialias: false, powerPreference: 'low-power' }}
+        shadows={false}
         frameloop={frameLoopMode}
+        performance={{ min: 0.6 }}
         camera={{ position: activeState.camera, fov: 40 }}
       >
         <color attach="background" args={['#0b1020']} />
         <ambientLight intensity={activeState.lightIntensity * 0.3} />
         <directionalLight castShadow position={[6, 10, 8]} intensity={activeState.lightIntensity} />
-        <Environment preset={activeState.preset} />
-        <AnimatedModel isMobile={isMobile} state={activeState} />
+        {!isMobile && <Environment preset={activeState.preset} />}
+        <AnimatedModel isMobile={isMobile} state={activeState} shouldLoadModel={shouldLoadModel} />
         {!isMobile && (
           <OrbitControls
             enablePan={false}
             enableZoom={false}
             enableRotate
-            autoRotate
+            autoRotate={!prefersReducedMotion}
             autoRotateSpeed={0.5}
             minPolarAngle={1}
             maxPolarAngle={1.9}
@@ -60,7 +62,20 @@ export function ModelPlayground() {
   )
 }
 
-function AnimatedModel({ isMobile, state }: { isMobile: boolean; state: typeof desktopState }) {
+const LazyModel = lazy(async () => {
+  const module = await import('./model')
+  return { default: module.Model }
+})
+
+function AnimatedModel({
+  isMobile,
+  state,
+  shouldLoadModel,
+}: {
+  isMobile: boolean
+  state: typeof desktopState
+  shouldLoadModel: boolean
+}) {
   const groupRef = useRef<Group>(null)
   const progress = useMobileScrollProgress(isMobile)
   const targets = useMemo(
@@ -103,7 +118,11 @@ function AnimatedModel({ isMobile, state }: { isMobile: boolean; state: typeof d
 
   return (
     <group ref={groupRef} position={state.position} rotation={state.rotation}>
-      <Model scale={state.scale} />
+      {shouldLoadModel && (
+        <Suspense fallback={null}>
+          <LazyModel scale={state.scale} />
+        </Suspense>
+      )}
     </group>
   )
 }
@@ -153,6 +172,42 @@ function useMobileScrollProgress(isMobile: boolean) {
   }, [isMobile])
 
   return isMobile ? progress : 0
+}
+
+function useDeferredModelLoad() {
+  const [shouldLoadModel, setShouldLoadModel] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const scheduleLoad = () => setShouldLoadModel(true)
+    const idleCallback = window.requestIdleCallback?.(scheduleLoad, { timeout: 1800 })
+    if (!idleCallback) {
+      const timer = window.setTimeout(scheduleLoad, 700)
+      return () => window.clearTimeout(timer)
+    }
+
+    return () => {
+      window.cancelIdleCallback?.(idleCallback)
+    }
+  }, [])
+
+  return shouldLoadModel
+}
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches)
+    onChange()
+    mediaQuery.addEventListener('change', onChange)
+    return () => mediaQuery.removeEventListener('change', onChange)
+  }, [])
+
+  return prefersReducedMotion
 }
 
 function interpolateKeyframes(values: [number, number, number][], progress: number): [number, number, number] {

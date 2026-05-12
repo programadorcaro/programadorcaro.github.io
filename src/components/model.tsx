@@ -206,4 +206,3 @@ export function Model(props: ModelProps) {
   )
 }
 
-useGLTF.preload('/models/hero.glb')
