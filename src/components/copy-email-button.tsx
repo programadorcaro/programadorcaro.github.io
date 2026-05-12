@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import type { SiteContent } from '../data/site'
 
 type CopyEmailProps = Pick<SiteContent, 'copyEmail'>
@@ -14,7 +14,7 @@ export function CopyEmailButton({ copyEmail }: CopyEmailProps) {
   }
 
   return (
-    <motion.button
+    <m.button
       type="button"
       onClick={copyToClipboard}
       whileHover={{ y: -5 }}
@@ -23,7 +23,7 @@ export function CopyEmailButton({ copyEmail }: CopyEmailProps) {
     >
       <AnimatePresence mode="wait">
         {copied ? (
-          <motion.p
+          <m.p
             className="flex items-center justify-center gap-2"
             key="copied"
             initial={{ opacity: 0, y: -10 }}
@@ -33,9 +33,9 @@ export function CopyEmailButton({ copyEmail }: CopyEmailProps) {
           >
             <img src={`/${copyEmail.copyDoneIcon}`} className="w-5" alt="" />
             {copyEmail.copiedLabel}
-          </motion.p>
+          </m.p>
         ) : (
-          <motion.p
+          <m.p
             className="flex items-center justify-center gap-2"
             key="copy"
             initial={{ opacity: 0 }}
@@ -45,9 +45,9 @@ export function CopyEmailButton({ copyEmail }: CopyEmailProps) {
           >
             <img src={`/${copyEmail.copyIcon}`} className="w-5" alt="" />
             {copyEmail.copyLabel}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
-    </motion.button>
+    </m.button>
   )
 }

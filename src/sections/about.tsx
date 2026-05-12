@@ -1,10 +1,49 @@
-import { useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AboutFloatingCard } from '../components/about-floating-card'
 import { CopyEmailButton } from '../components/copy-email-button'
 import { FrameworksOrbit } from '../components/frameworks-orbit'
-import { Globe } from '../components/globe'
 import { Section } from '../components/section'
-import { site } from '../data/site'
+import { site, type GlobeMarker } from '../data/site'
+
+const LazyGlobe = lazy(async () => {
+  const m = await import('../components/globe')
+  return { default: m.Globe }
+})
+
+function GlobeWhenVisible({ markers }: { markers: GlobeMarker[] }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShow(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '120px', threshold: 0 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className="relative w-full min-w-[12rem] max-w-[min(100%,24rem)]">
+      {show ? (
+        <Suspense
+          fallback={<div className="mx-auto aspect-square w-full max-w-[20rem] rounded-full bg-neutral-900/35" aria-hidden />}
+        >
+          <LazyGlobe markers={markers} />
+        </Suspense>
+      ) : (
+        <div className="mx-auto aspect-square w-full max-w-[20rem] min-h-[12rem] rounded-full bg-neutral-900/20" aria-hidden />
+      )}
+    </div>
+  )
+}
 
 function assetUrl(path: string) {
   return path.startsWith('/') ? path : `/${path}`
@@ -51,7 +90,7 @@ export function AboutSection() {
             <p className="subtext">{about.timezone.body}</p>
           </div>
           <figure className="absolute left-[30%] top-[10%]">
-            <Globe markers={globe.markers} />
+            <GlobeWhenVisible markers={globe.markers} />
           </figure>
         </div>
 

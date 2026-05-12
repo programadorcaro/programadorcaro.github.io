@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { m, useMotionValue, useSpring } from 'framer-motion'
 import { ProjectRow } from '../components/project-row'
 import { Section } from '../components/section'
 import { site } from '../data/site'
@@ -71,7 +71,7 @@ export function ProjectsSection() {
         </div>
       ))}
       {preview && (
-        <motion.img
+        <m.img
           className="pointer-events-none fixed left-0 top-0 z-50 h-56 w-80 rounded-lg object-cover shadow-lg"
           src={preview}
           style={{ x: springX, y: springY }}

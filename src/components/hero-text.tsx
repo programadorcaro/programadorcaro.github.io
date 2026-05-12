@@ -1,68 +1,70 @@
-import { m } from "framer-motion";
-import type { FooterCtas, SiteContent } from "../data/site";
-import { FlipWords } from "./flip-words";
+import { m } from 'framer-motion'
+import { useMemo } from 'react'
+import type { FooterCtas, SiteContent } from '../data/site'
+import { FlipWords } from './flip-words'
 
 type HeroTextProps = {
-  hero: SiteContent["hero"];
-  ctas: FooterCtas;
-};
+  hero: SiteContent['hero']
+  ctas: FooterCtas
+}
 
 const variants = {
   hidden: { opacity: 0, x: -50 },
   visible: { opacity: 1, x: 0 },
-};
+}
 
 export function HeroText({ hero, ctas }: HeroTextProps) {
-  const words = hero.flipWords;
-  const { desktop, mobile } = hero;
+  const words = hero.flipWords
+  const { desktop, mobile } = hero
+  const isNarrow = useMemo(
+    () => (typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)').matches : false),
+    [],
+  )
+  const d1 = isNarrow ? 0 : 1
+  const d12 = isNarrow ? 0.06 : 1.2
+  const d15 = isNarrow ? 0.12 : 1.5
+  const d18 = isNarrow ? 0.18 : 1.8
+  const dCta = isNarrow ? 0.28 : 2.1
 
   return (
     <div className="z-10 mx-auto mt-[12vh] md:mt-[20vh] w-full max-w-7xl bg-clip-text text-center md:text-left">
-      <div className="hidden flex-col gap-6 md:flex">
+      <div className="hidden flex-col gap-6 md:flex md:w-min">
         <m.h1
           className="text-4xl font-medium"
           variants={variants}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 1 }}
+          transition={{ delay: d1 }}
         >
           {desktop.greeting}
         </m.h1>
-        <div className="flex flex-col items-start w-min">
+        <div className="flex w-min flex-col items-start">
           <m.p
             className="text-5xl font-medium text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 1.2 }}
+            transition={{ delay: d12 }}
           >
             {desktop.lineBeforeFlip} <br /> {desktop.lineBreak}
           </m.p>
-          <m.div
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 1.5 }}
-          >
-            <FlipWords
-              words={words}
-              className="text-8xl font-black text-white"
-            />
+          <m.div variants={variants} initial="hidden" animate="visible" transition={{ delay: d15 }}>
+            <FlipWords words={words} className="text-8xl font-black text-white" />
           </m.div>
           <m.p
             className="mt-2 text-4xl font-medium text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 1.8 }}
+            transition={{ delay: d18 }}
           >
             {desktop.lineAfterFlip}
           </m.p>
         </div>
         <HeroCtas
           ctas={ctas}
-          className="mt-4 w-full max-w-2xl flex flex-col gap-3 sm:flex-row sm:gap-4"
-          transitionDelay={2.1}
+          className="mt-4 flex w-full max-w-2xl flex-col gap-3 sm:flex-row sm:gap-4"
+          transitionDelay={dCta}
         />
       </div>
 
@@ -72,7 +74,7 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
           variants={variants}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 1 }}
+          transition={{ delay: d1 }}
         >
           {mobile.greeting}
         </m.p>
@@ -82,29 +84,19 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
             variants={variants}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 1.2 }}
+            transition={{ delay: d12 }}
           >
             {mobile.lineBeforeFlip}
           </m.p>
-          <m.div
-            className="w-full"
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 1.5 }}
-          >
-            <FlipWords
-              center
-              words={words}
-              className="text-5xl font-bold text-white my-4"
-            />
+          <m.div className="w-full" variants={variants} initial="hidden" animate="visible" transition={{ delay: d15 }}>
+            <FlipWords center words={words} className="my-4 text-5xl font-bold text-white" />
           </m.div>
           <m.p
             className="text-4xl font-black text-neutral-300"
             variants={variants}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 1.8 }}
+            transition={{ delay: d18 }}
           >
             {mobile.lineAfterFlip}
           </m.p>
@@ -112,11 +104,11 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
         <HeroCtas
           ctas={ctas}
           className="mt-2 flex w-full max-w-2xl flex-col gap-3 sm:flex-row sm:gap-4"
-          transitionDelay={2.1}
+          transitionDelay={dCta}
         />
       </div>
     </div>
-  );
+  )
 }
 
 function HeroCtas({
@@ -124,9 +116,9 @@ function HeroCtas({
   className,
   transitionDelay,
 }: {
-  ctas: FooterCtas;
-  className: string;
-  transitionDelay: number;
+  ctas: FooterCtas
+  className: string
+  transitionDelay: number
 }) {
   return (
     <m.div
@@ -163,5 +155,5 @@ function HeroCtas({
         {ctas.linkedIn.label}
       </a>
     </m.div>
-  );
+  )
 }

@@ -1,13 +1,60 @@
 import emailjs from '@emailjs/browser'
-import { useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AlertToast } from '../components/alert-toast'
-import { Particles } from '../components/particles'
 import { Section } from '../components/section'
 import { site } from '../data/site'
+
+const LazyParticles = lazy(async () => {
+  const m = await import('../components/particles')
+  return { default: m.Particles }
+})
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_wqaqblr'
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_jiyk3x1'
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'JUgKs-Z9Rviu3nrPw'
+
+function ParticlesWhenVisible(props: {
+  className?: string
+  quantity: number
+  ease: number
+  color: string
+  refresh?: boolean
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShow(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '160px', threshold: 0 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className={`pointer-events-none ${props.className ?? ''}`} aria-hidden>
+      {show ? (
+        <Suspense fallback={null}>
+          <LazyParticles
+            className="size-full min-h-full"
+            quantity={props.quantity}
+            ease={props.ease}
+            color={props.color}
+            refresh={props.refresh}
+          />
+        </Suspense>
+      ) : null}
+    </div>
+  )
+}
 
 export function ContactSection() {
   const { contact } = site
@@ -55,7 +102,7 @@ export function ContactSection() {
 
   return (
     <Section id="contact" className="relative flex items-center">
-      <Particles
+      <ParticlesWhenVisible
         className="absolute inset-0 -z-50"
         quantity={contact.particles.quantity}
         ease={contact.particles.ease}

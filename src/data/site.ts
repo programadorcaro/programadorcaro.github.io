@@ -143,6 +143,8 @@ export type SiteContent = {
     sectionDescription: string
     viewProjectLabel: string
     linkPendingLabel: string
+    seeMoreLabel: string
+    seeLessLabel: string
     items: CompanyProjectItem[]
   }
   educationAchievements: {
@@ -572,6 +574,8 @@ export const site: SiteContent = {
     sectionDescription: 'Projects linked to each company role. This section is ready for LinkedIn public export enrichment.',
     viewProjectLabel: siteJson.companyProjectsLabels.viewProjectLabel,
     linkPendingLabel: siteJson.companyProjectsLabels.linkPendingLabel,
+    seeMoreLabel: siteJson.companyProjectsLabels.seeMoreLabel,
+    seeLessLabel: siteJson.companyProjectsLabels.seeLessLabel,
     items: lucas.experience.flatMap(normalizeExperienceProjects),
   },
   educationAchievements: {

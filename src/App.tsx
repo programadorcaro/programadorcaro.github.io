@@ -4,6 +4,7 @@ import { HeroStaticBackdrop } from './components/hero-static-backdrop'
 import { Header } from './components/header'
 import { HeroText } from './components/hero-text'
 import { Section } from './components/section'
+import { ViewportDeferredSection } from './components/viewport-deferred-section'
 import { site } from './data/site'
 
 const AboutSection = lazy(async () => {
@@ -66,19 +67,53 @@ function App() {
         </Section>
       </LazyMotion>
 
-      <Suspense fallback={null}>
-        <div className="container mx-auto max-w-7xl">
-          <AboutSection />
-          <ProjectsSection />
-          <ExperiencesSection />
-          <CompanyProjectsSection />
-          <EducationAchievementsSection />
-          <CSSDrawingsSection />
-          <TestimonialSection />
-          <ContactSection />
-          <FooterSection />
-        </div>
-      </Suspense>
+      <div className="container mx-auto max-w-7xl">
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <AboutSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <ProjectsSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <ExperiencesSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <CompanyProjectsSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <EducationAchievementsSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <CSSDrawingsSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <TestimonialSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <ContactSection />
+          </Suspense>
+        </ViewportDeferredSection>
+        <ViewportDeferredSection>
+          <Suspense fallback={null}>
+            <FooterSection />
+          </Suspense>
+        </ViewportDeferredSection>
+      </div>
     </main>
   )
 }

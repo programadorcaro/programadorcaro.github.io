@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import type { ProjectTag } from '../data/site'
 
 type ProjectDetailsProps = {
@@ -28,7 +28,7 @@ export function ProjectDetails({
 }: ProjectDetailsProps) {
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-hidden backdrop-blur-sm">
-      <motion.div
+      <m.div
         className="relative max-w-2xl rounded-2xl border border-white/10 bg-gradient-to-l from-midnight to-navy shadow-sm"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -73,7 +73,7 @@ export function ProjectDetails({
             )}
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

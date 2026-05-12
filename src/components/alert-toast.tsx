@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 
 type AlertToastProps = {
   type: 'success' | 'danger'
@@ -15,7 +15,7 @@ export function AlertToast({ type, text, badges }: AlertToastProps) {
 
   return (
     <AnimatePresence>
-      <motion.div
+      <m.div
         className="fixed bottom-5 right-5 z-50 flex items-center justify-center"
         initial="hidden"
         animate="visible"
@@ -33,7 +33,7 @@ export function AlertToast({ type, text, badges }: AlertToastProps) {
           </p>
           <p className="mr-2 text-left">{text}</p>
         </div>
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   )
 }

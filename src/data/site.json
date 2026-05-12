@@ -21,7 +21,9 @@
   },
   "companyProjectsLabels": {
     "viewProjectLabel": "View Project",
-    "linkPendingLabel": "Link pending (add via LinkedIn export)"
+    "linkPendingLabel": "Link pending (add via LinkedIn export)",
+    "seeMoreLabel": "See more",
+    "seeLessLabel": "See less"
   },
   "youtubeCarousel": {
     "emptyState": "Add valid YouTube video IDs to footer.youtubeVideos in site data to render the carousel."

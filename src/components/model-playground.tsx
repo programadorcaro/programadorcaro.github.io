@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, OrbitControls, useGLTF } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import type { Group } from 'three'
 import { MOUSE, TOUCH } from 'three'
 
@@ -33,10 +33,6 @@ export function ModelPlayground() {
   const [contextLost, setContextLost] = useState(false)
   const onContextLost = useCallback(() => {
     setContextLost(true)
-  }, [])
-
-  useEffect(() => {
-    useGLTF.preload('/models/hero.glb')
   }, [])
 
   if (contextLost) {
@@ -133,6 +129,29 @@ function AnimatedModel({
     }),
     [state.position, state.rotation],
   )
+
+  useEffect(() => {
+    if (!shouldLoadModel) return
+    let cancelled = false
+    const run = () => {
+      if (cancelled) return
+      void import('@react-three/drei').then((d) => {
+        d.useGLTF.preload('/models/hero.glb')
+      })
+    }
+    const id = window.requestIdleCallback?.(run, { timeout: 2800 })
+    if (id === undefined) {
+      const t = window.setTimeout(run, 500)
+      return () => {
+        cancelled = true
+        clearTimeout(t)
+      }
+    }
+    return () => {
+      cancelled = true
+      window.cancelIdleCallback?.(id)
+    }
+  }, [shouldLoadModel])
 
   useFrame((rootState) => {
     const group = groupRef.current
