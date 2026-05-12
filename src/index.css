@@ -111,7 +111,7 @@ body {
 }
 
 .grid-1 {
-  @apply row-span-2 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
+  @apply row-span-2 md:col-span-3 min-h-[15rem] md:min-h-[36rem] h-auto md:h-auto relative overflow-hidden hover:-translate-y-1 duration-200;
 }
 .grid-2 {
   @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
@@ -128,6 +128,10 @@ body {
 
 .grid-default-color {
   @apply p-6 bg-gradient-to-b from-storm to-indigo rounded-2xl;
+}
+
+.grid-1.grid-default-color {
+  @apply p-0;
 }
 
 .grid-special-color {

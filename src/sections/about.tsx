@@ -17,14 +17,14 @@ export function AboutSection() {
   return (
     <Section id="about">
       <h2 className="text-heading">{about.sectionTitle}</h2>
-      <div className="mt-12 grid grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-6">
-        <div className="grid-1 grid-default-color flex items-end">
+      <div className="mt-12 grid grid-cols-1 gap-4 md:auto-rows-[minmax(18rem,auto)] md:grid-cols-6">
+        <div className="grid-1 grid-default-color flex flex-col justify-end">
           <img src={assetUrl(about.intro.image)} className={about.intro.imageClass} alt="" />
-          <div className="z-10 absolute inset-x-0 b-0 p-6 bg-black/20 backdrop-blur-lg flex flex-col gap-2">
+          <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-1/2 bg-linear-to-t from-indigo sm:h-1/3" />
+          <div className="relative z-10 mt-auto flex w-full flex-col gap-2 bg-black/20 p-6 backdrop-blur-lg">
             <p className="text-2xl font-bold">{about.intro.headline}</p>
             <p className="text-sm text-white/76">{about.intro.body}</p>
           </div>
-          <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-1/2 bg-linear-to-t from-indigo sm:h-1/3" />
         </div>
 
         <div className="grid-2 grid-default-color">
