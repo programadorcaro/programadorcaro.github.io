@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { FooterCtas, SiteContent } from "../data/site";
 import { FlipWords } from "./flip-words";
 
@@ -19,7 +19,7 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
   return (
     <div className="z-10 mx-auto mt-[12vh] md:mt-[20vh] w-full max-w-7xl bg-clip-text text-center md:text-left">
       <div className="hidden flex-col gap-6 md:flex">
-        <motion.h1
+        <m.h1
           className="text-4xl font-medium"
           variants={variants}
           initial="hidden"
@@ -27,9 +27,9 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
           transition={{ delay: 1 }}
         >
           {desktop.greeting}
-        </motion.h1>
+        </m.h1>
         <div className="flex flex-col items-start w-min">
-          <motion.p
+          <m.p
             className="text-5xl font-medium text-neutral-300"
             variants={variants}
             initial="hidden"
@@ -37,8 +37,8 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
             transition={{ delay: 1.2 }}
           >
             {desktop.lineBeforeFlip} <br /> {desktop.lineBreak}
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -48,8 +48,8 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
               words={words}
               className="text-8xl font-black text-white"
             />
-          </motion.div>
-          <motion.p
+          </m.div>
+          <m.p
             className="mt-2 text-4xl font-medium text-neutral-300"
             variants={variants}
             initial="hidden"
@@ -57,7 +57,7 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
             transition={{ delay: 1.8 }}
           >
             {desktop.lineAfterFlip}
-          </motion.p>
+          </m.p>
         </div>
         <HeroCtas
           ctas={ctas}
@@ -67,7 +67,7 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
       </div>
 
       <div className="flex flex-col items-center gap-6 text-center md:hidden">
-        <motion.p
+        <m.p
           className="text-4xl font-medium"
           variants={variants}
           initial="hidden"
@@ -75,9 +75,9 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
           transition={{ delay: 1 }}
         >
           {mobile.greeting}
-        </motion.p>
+        </m.p>
         <div className="flex w-full max-w-full flex-col items-center text-center">
-          <motion.p
+          <m.p
             className="text-5xl font-black text-neutral-300"
             variants={variants}
             initial="hidden"
@@ -85,8 +85,8 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
             transition={{ delay: 1.2 }}
           >
             {mobile.lineBeforeFlip}
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             className="w-full"
             variants={variants}
             initial="hidden"
@@ -98,8 +98,8 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
               words={words}
               className="text-5xl font-bold text-white my-4"
             />
-          </motion.div>
-          <motion.p
+          </m.div>
+          <m.p
             className="text-4xl font-black text-neutral-300"
             variants={variants}
             initial="hidden"
@@ -107,7 +107,7 @@ export function HeroText({ hero, ctas }: HeroTextProps) {
             transition={{ delay: 1.8 }}
           >
             {mobile.lineAfterFlip}
-          </motion.p>
+          </m.p>
         </div>
         <HeroCtas
           ctas={ctas}
@@ -129,7 +129,7 @@ function HeroCtas({
   transitionDelay: number;
 }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={variants}
       initial="hidden"
@@ -147,6 +147,7 @@ function HeroCtas({
           width={28}
           height={28}
           decoding="async"
+          fetchPriority="high"
           className="h-7 w-7 shrink-0"
           alt=""
           aria-hidden
@@ -161,6 +162,6 @@ function HeroCtas({
       >
         {ctas.linkedIn.label}
       </a>
-    </motion.div>
+    </m.div>
   );
 }

@@ -1,6 +1,6 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Environment, OrbitControls, useGLTF } from '@react-three/drei'
 import type { Group } from 'three'
 import { MOUSE, TOUCH } from 'three'
 
@@ -22,28 +22,52 @@ const mobileState = {
   preset: 'city' as const,
 }
 
+const HERO_CLEAR = '#0b1020'
+
 export function ModelPlayground() {
   const isMobile = useIsMobile()
   const prefersReducedMotion = usePrefersReducedMotion()
   const shouldLoadModel = useDeferredModelLoad()
   const activeState = isMobile ? mobileState : desktopState
   const frameLoopMode = isMobile || prefersReducedMotion ? 'demand' : 'always'
+  const [contextLost, setContextLost] = useState(false)
+  const onContextLost = useCallback(() => {
+    setContextLost(true)
+  }, [])
+
+  useEffect(() => {
+    useGLTF.preload('/models/hero.glb')
+  }, [])
+
+  if (contextLost) {
+    return null
+  }
 
   return (
-    <section className="pointer-events-none absolute inset-0 z-0" style={{ touchAction: 'pan-y' }}>
+    <section className="pointer-events-none absolute inset-0 z-[1] bg-[#0b1020]" style={{ touchAction: 'pan-y' }}>
       <Canvas
+        className="h-full w-full [&>canvas]:block [&>canvas]:h-full [&>canvas]:w-full [&>canvas]:bg-[#0b1020]"
         dpr={isMobile ? [1, 1.05] : [1, 1.15]}
-        gl={{ antialias: false, powerPreference: 'low-power' }}
+        gl={{ alpha: false, antialias: false, powerPreference: 'default' }}
         shadows={false}
         frameloop={frameLoopMode}
         performance={{ min: 0.6 }}
         camera={{ position: activeState.camera, fov: 40 }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(HERO_CLEAR, 1)
+          gl.domElement.style.background = HERO_CLEAR
+        }}
       >
-        <color attach="background" args={['#0b1020']} />
+        <ContextLostGuard onLost={onContextLost} />
+        <color attach="background" args={[HERO_CLEAR]} />
         <ambientLight intensity={activeState.lightIntensity * 0.3} />
         <directionalLight castShadow position={[6, 10, 8]} intensity={activeState.lightIntensity} />
-        {!isMobile && <Environment preset={activeState.preset} />}
-        <AnimatedModel isMobile={isMobile} state={activeState} shouldLoadModel={shouldLoadModel} />
+        {!isMobile && (
+          <Suspense fallback={null}>
+            <Environment preset={activeState.preset} />
+          </Suspense>
+        )}
+        <AnimatedModel isMobile={isMobile} state={activeState} shouldLoadModel={shouldLoadModel} frameLoopMode={frameLoopMode} />
         {!isMobile && (
           <OrbitControls
             enablePan={false}
@@ -62,6 +86,20 @@ export function ModelPlayground() {
   )
 }
 
+function ContextLostGuard({ onLost }: { onLost: () => void }) {
+  const gl = useThree((s) => s.gl)
+  useLayoutEffect(() => {
+    const el = gl.domElement
+    const handleLost = (event: Event) => {
+      event.preventDefault()
+      onLost()
+    }
+    el.addEventListener('webglcontextlost', handleLost)
+    return () => el.removeEventListener('webglcontextlost', handleLost)
+  }, [gl, onLost])
+  return null
+}
+
 const LazyModel = lazy(async () => {
   const module = await import('./model')
   return { default: module.Model }
@@ -71,10 +109,12 @@ function AnimatedModel({
   isMobile,
   state,
   shouldLoadModel,
+  frameLoopMode,
 }: {
   isMobile: boolean
   state: typeof desktopState
   shouldLoadModel: boolean
+  frameLoopMode: 'always' | 'demand' | 'never'
 }) {
   const groupRef = useRef<Group>(null)
   const progress = useMobileScrollProgress(isMobile)
@@ -94,26 +134,29 @@ function AnimatedModel({
     [state.position, state.rotation],
   )
 
-  useFrame(() => {
+  useFrame((rootState) => {
     const group = groupRef.current
     if (!group) return
 
     if (!isMobile) {
       group.position.set(state.position[0], state.position[1], state.position[2])
       group.rotation.set(state.rotation[0], state.rotation[1], state.rotation[2])
-      return
+    } else {
+      const targetPosition = interpolateKeyframes(targets.position, progress)
+      const targetRotation = interpolateKeyframes(targets.rotation, progress)
+
+      group.position.x += (targetPosition[0] - group.position.x) * 0.08
+      group.position.y += (targetPosition[1] - group.position.y) * 0.08
+      group.position.z += (targetPosition[2] - group.position.z) * 0.08
+
+      group.rotation.x += (targetRotation[0] - group.rotation.x) * 0.08
+      group.rotation.y += (targetRotation[1] - group.rotation.y) * 0.08
+      group.rotation.z += (targetRotation[2] - group.rotation.z) * 0.08
     }
 
-    const targetPosition = interpolateKeyframes(targets.position, progress)
-    const targetRotation = interpolateKeyframes(targets.rotation, progress)
-
-    group.position.x += (targetPosition[0] - group.position.x) * 0.08
-    group.position.y += (targetPosition[1] - group.position.y) * 0.08
-    group.position.z += (targetPosition[2] - group.position.z) * 0.08
-
-    group.rotation.x += (targetRotation[0] - group.rotation.x) * 0.08
-    group.rotation.y += (targetRotation[1] - group.rotation.y) * 0.08
-    group.rotation.z += (targetRotation[2] - group.rotation.z) * 0.08
+    if (frameLoopMode === 'demand') {
+      rootState.invalidate()
+    }
   })
 
   return (
@@ -181,9 +224,9 @@ function useDeferredModelLoad() {
     if (typeof window === 'undefined') return
 
     const scheduleLoad = () => setShouldLoadModel(true)
-    const idleCallback = window.requestIdleCallback?.(scheduleLoad, { timeout: 1800 })
+    const idleCallback = window.requestIdleCallback?.(scheduleLoad, { timeout: 4000 })
     if (!idleCallback) {
-      const timer = window.setTimeout(scheduleLoad, 700)
+      const timer = window.setTimeout(scheduleLoad, 1600)
       return () => window.clearTimeout(timer)
     }
 

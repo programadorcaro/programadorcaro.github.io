@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import type { NavItem } from '../data/site'
 
 type HeaderProps = {
@@ -45,7 +45,7 @@ export function Header({ brandName, nav }: HeaderProps) {
       </div>
 
       {isOpen && (
-        <motion.div
+        <m.div
           className="block overflow-hidden text-center sm:hidden"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -55,7 +55,7 @@ export function Header({ brandName, nav }: HeaderProps) {
           <nav className="py-12">
             <Navigation nav={nav} onNavigate={handleNavClick} />
           </nav>
-        </motion.div>
+        </m.div>
       )}
     </header>
   )

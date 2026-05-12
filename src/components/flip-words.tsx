@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import { twMerge } from 'tailwind-merge'
 
 type FlipWordsProps = {
@@ -43,7 +43,7 @@ export function FlipWords({ words, duration = 3000, className, center = false }:
         {fallbackWord}
       </span>
       <AnimatePresence mode="wait" onExitComplete={() => setIsAnimating(false)}>
-        <motion.span
+        <m.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 100, damping: 10 }}
@@ -55,7 +55,7 @@ export function FlipWords({ words, duration = 3000, className, center = false }:
           key={currentWord}
         >
           {currentWord.split(' ').map((word, wordIndex) => (
-            <motion.span
+            <m.span
               key={`${word}-${wordIndex}`}
               initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -63,7 +63,7 @@ export function FlipWords({ words, duration = 3000, className, center = false }:
               className="inline-block whitespace-nowrap"
             >
               {word.split('').map((letter, letterIndex) => (
-                <motion.span
+                <m.span
                   key={`${word}-${letter}-${letterIndex}`}
                   initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -71,12 +71,12 @@ export function FlipWords({ words, duration = 3000, className, center = false }:
                   className="inline-block"
                 >
                   {letter}
-                </motion.span>
+                </m.span>
               ))}
               <span className="inline-block">&nbsp;</span>
-            </motion.span>
+            </m.span>
           ))}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   )
