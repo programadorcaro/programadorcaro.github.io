@@ -7,7 +7,7 @@ import * as Swetrix from 'swetrix'
 
 if (import.meta.env.PROD) {
   Swetrix.init('LcYLP3MNYXyP', {
-    apiURL: 'https://api-analytics.usekit.dev/backend/v1/log',
+    apiURL: 'https://api-analytics.usekit.dev',
   })
   Swetrix.trackViews()
 }
